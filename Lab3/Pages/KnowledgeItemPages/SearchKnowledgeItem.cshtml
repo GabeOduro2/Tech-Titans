@@ -1,0 +1,55 @@
+﻿@page
+@using System.Data.SqlClient
+@using Lab3.Pages.DB
+@model SearchKnowledgeItemModel
+@{
+}
+
+<h2>Knowledge Library</h2>
+<br />
+<h3>Search Existing Items</h3>
+    
+<h3>Search By Keyword</h3>
+<form method="post" asp-page-handler="Search">
+    <input type="text" asp-for="KeywordSearch" placeholder="Enter Keyword:" />
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+ <br />
+ <br />
+
+<h3>Filter By User</h3>
+<form method="post" asp-page-handler="Filter">
+    <select asp-for="SelectedUserID" asp-items="Model.Users" class="form-select">
+        <option value="">Select User-></option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+<br/>
+
+
+@{
+    if (!string.IsNullOrEmpty(Model.KeywordSearch)){
+        // Display search results
+    }
+}
+<br />
+<h2 class="h2">Knowledge Items:</h2>
+<table class="table table-bordered table-responsive table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Item Title:</th>
+            <th>Information:</th>
+            <th>Author:</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.KnowledgeItems)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Information</td>
+                <td>@($"{item.User.FirstName} {item.User.LastName}")</td>
+            </tr>
+        }
+    </tbody>
+</table>
