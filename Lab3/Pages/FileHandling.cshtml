@@ -1,0 +1,20 @@
+﻿@page
+@using System.IO
+@model InventoryManagement.Pages.Practice.FileHandlingModel
+@{
+}
+
+@{
+    string imagesDir = Directory.GetCurrentDirectory();
+    imagesDir += @"\wwwroot\fileupload\";
+    <p>@imagesDir</p>
+    <br />
+    DirectoryInfo imagesFolder = new DirectoryInfo(imagesDir);
+
+    var fileListing = imagesFolder.GetFiles();
+
+    foreach (var file in fileListing)
+    {
+        <a href="/fileupload/@file.Name" target="_blank">@file.Name</a><br />
+    }
+}

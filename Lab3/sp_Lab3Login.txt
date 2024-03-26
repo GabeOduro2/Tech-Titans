@@ -1,0 +1,16 @@
+Create Procedure sp_Lab3Login
+
+@Username AS NVARCHAR(50)
+
+AS
+BEGIN
+	-- Prevents message from indicating #
+	-- rows impacted by the query from 
+	-- being included in results
+	SET NOCOUNT ON;
+
+	SELECT Password
+	FROM HashedCredentials
+	WHERE Username = @Username;
+
+END;
