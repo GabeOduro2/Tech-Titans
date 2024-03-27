@@ -1,0 +1,59 @@
+﻿@page
+@model AddKnowledgeItem
+@{
+}
+
+<h1>Add a New Knowledge Item</h1>
+<br />
+<form asp-page="AddKnowledgeItem">
+    <h3>Select Item's Category</h3>
+    <div>
+        @foreach (var cat in Model.Categories)
+        {
+            <input type="radio" asp-for="Category" value="@cat" /> @cat <br />
+        }
+    </div>
+    <input type="submit" asp-page-handler="Category" />
+    <br />
+    You chose: @Model.Category
+</form>
+<br />
+<br />
+<form asp-page="AddKnowledgeItem">
+    <label asp-for="NewItem.Title">Create Title:</label>
+    <input asp-for="NewItem.Title" placeholder="Title:" />
+    <span asp-validation-for="NewItem.Title" class="text-danger"></span>
+    <br />
+    <br />
+    <select asp-for="NewItem.UserID" asp-items="Model.Users" class="form-select">
+        <option value="">Select User-></option>
+    </select>
+    <br />
+
+    <label asp-for="NewItem.Information" class="form-label">Add Information or Analysis:</label>
+    <span asp-validation-for="NewItem.Information" class="text-danger"></span>
+    <textarea asp-for="NewItem.Information" class="form-control" rows="8" cols="50">Add Information or Analysis:</textarea>
+
+    <br />
+    <input type="submit" value="Create Item->" class="btn btn-primary" asp-page-handler="Submit">
+    <button class="btn-outline-secondary" asp-page="AddKnowledgeItem" asp-page-handler="PopulateHandler" formnovalidate>Populate</button>
+    <button class="btn-outline-secondary" asp-page-handler="Clear">Clear</button>
+    <br />
+    <br />
+    <button class="btn-primary" asp-page-handler="CSVFile">Add CSV File</button>
+    @{
+        if (Model.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">
+                @Model.ErrorMessage
+            </div>
+        }
+    }
+</form>
+
+@{
+    if (Model.CreateMessage != null)
+    {
+        <p> @Model.CreateMessage</p>
+    }
+}

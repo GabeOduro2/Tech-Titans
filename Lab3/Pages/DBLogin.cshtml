@@ -1,0 +1,56 @@
+﻿@page
+@model Lab3.Pages.DBLoginModel
+@{
+}
+
+@{
+    if (ViewData["LoginMessage"]!= null)
+    {
+        <p class="text-danger">@ViewData["LoginMessage"]</p>
+    }
+}
+
+@{
+    if (HttpContext.Session.GetString("username") != null)
+    {
+        <p>@HttpContext.Session.GetString("username") logged in</p>
+        // Log out here
+        <form asp-page="DBLogin" asp-page-handler="LogoutHandler">
+        <input type="submit" class="btn btn-danger" value="Logout">
+        </form>
+
+    }
+    else if (HttpContext.Session.GetString("LoginError") != null)
+    {
+        <p class="text-danger">@HttpContext.Session.GetString("LoginError")</p>
+
+
+        // Let the user try login again.
+        <form asp-page="DBLogin">
+        <input asp-for="Username" class="form-control" placeholder="Enter Username" />
+        <br />
+        <label>Enter Password:</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <br />
+        <input type="submit" class="btn btn-primary" />
+        </form>
+        <br />
+
+    }
+    else
+    {
+        // First time loading the page
+
+        <form asp-page="DBLogin">
+        <input asp-for="Username" class="form-control" placeholder="Enter Username" />
+        <br />
+        <label>Enter Password:</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <br />
+        <input type="submit" class="btn btn-primary" />
+        </form>
+        <br />
+    }
+
+}
+
