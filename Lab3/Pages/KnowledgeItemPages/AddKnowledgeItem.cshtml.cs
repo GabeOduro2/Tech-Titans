@@ -31,7 +31,6 @@ namespace Lab3.Pages.KnowledgeItemPages
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("/DBLogin");
             }
-            return Page();
         }
 
         public void LoadUsers()
