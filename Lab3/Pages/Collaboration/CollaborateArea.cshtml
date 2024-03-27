@@ -55,3 +55,14 @@
     </select>
     <button type="submit" asp-page-handler="AddKnowledge">Create</button>
 </form>
+<br />
+
+<button class="btn-primary" asp-page-handler="CSVFile">Add CSV File</button>
+@{
+    if (Model.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @Model.ErrorMessage
+        </div>
+    }
+}

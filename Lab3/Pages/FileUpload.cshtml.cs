@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using CsvHelper;
 
-namespace InventoryManagement.Pages.Practice
+namespace Lab3.Pages
 {
     public class FileUploadModel : PageModel
     {

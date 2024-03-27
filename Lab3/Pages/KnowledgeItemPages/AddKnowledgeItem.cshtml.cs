@@ -16,8 +16,6 @@ namespace Lab3.Pages.KnowledgeItemPages
         [BindProperty] public string? Category { get; set; }
         public string[] Categories = new[] { "Knowledge Item", "SWOT" };
         [BindProperty] public string? CreateMessage { get; set; }
-        [BindProperty] public string? ErrorMessage { get; set; }
-
 
         public IActionResult OnGet(KnowledgeItemModel category)
         {
@@ -99,10 +97,6 @@ namespace Lab3.Pages.KnowledgeItemPages
             //NewItem.UserID = null;
             NewItem.Information = "";
             return Page();
-        }
-        public IActionResult OnPostCSVFile() 
-        {
-            return RedirectToPage("/FileUpload");
         }
     }
 }

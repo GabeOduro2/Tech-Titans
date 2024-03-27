@@ -16,6 +16,7 @@ namespace Lab3.Pages.Collaboration
         [BindProperty] public CollabClass CurrentCollab { get; set; }
         [BindProperty] public Chat Messages { get; set; }
         [BindProperty] public Chat NewMessage { get; set; }
+        [BindProperty] public string? ErrorMessage { get; set; }
 
         public IActionResult OnGet()
         {
@@ -92,15 +93,9 @@ namespace Lab3.Pages.Collaboration
 
             return Page();
         }
-
-        //public IActionResult OnPostAddKnowledge()
-        //{
-        //    if (SelectKnowledgeItem != null)
-        //    {
-        //        // Try using Edit Products (Products folder)
-        //        KnowledgeItems = SelectKnowledgeItem;
-        //    }
-        //    return Page();
-        //}
+        public IActionResult OnPostCSVFile()
+        {
+            return RedirectToPage("/FileUpload");
+        }
     }
 }
