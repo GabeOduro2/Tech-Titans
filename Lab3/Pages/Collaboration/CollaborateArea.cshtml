@@ -57,7 +57,9 @@
 </form>
 <br />
 
-<button class="btn-primary" asp-page-handler="CSVFile">Add CSV File</button>
+<form method="post">
+    <button class="btn-primary" type="submit" asp-page-handler="CSVFile">Add CSV File</button>
+</form>
 @{
     if (Model.ErrorMessage != null)
     {
