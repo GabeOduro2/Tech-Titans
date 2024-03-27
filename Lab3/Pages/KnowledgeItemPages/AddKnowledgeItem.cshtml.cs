@@ -14,7 +14,7 @@ namespace Lab3.Pages.KnowledgeItemPages
         [BindProperty] public KnowledgeItemModel NewItem { get; set; }
         [BindProperty] public List<SelectListItem> Users { get; set; }
         [BindProperty] public string? Category { get; set; }
-        public string[] Categories = new[] { "Knowledge Item", "SWOT" };
+        public string[] Categories = new[] { "Knowledge Item", "SWOT", "PEST" };
         [BindProperty] public string? CreateMessage { get; set; }
         [BindProperty] public string? ErrorMessage { get; set; }
 
@@ -59,6 +59,10 @@ namespace Lab3.Pages.KnowledgeItemPages
             if (Category == "SWOT")
             {
                 NewItem.Information = "Strengths: \nWeaknesses: \nOpportunities: \nThreats: ";
+            }
+            if (Category == "PEST")
+            {
+                NewItem.Information = "Political: \nEconomic: \nSocial: \nTechnological: ";
             }
             LoadUsers();
             return Page();
