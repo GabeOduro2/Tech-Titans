@@ -12,7 +12,6 @@ namespace Lab3.Pages.Collaboration
         [BindProperty] public List<SelectListItem> CollabAreas { get; set; }
         [BindProperty] public List<SelectListItem> SelectKnowledgeItem { get; set; }
         [BindProperty] public List<KnowledgeItemModel> KnowledgeItems { get; set; } = new List<KnowledgeItemModel>();
-        [BindProperty] public CollabClass NewCollab { get; set; }
         [BindProperty] public CollabClass CurrentCollab { get; set; }
         [BindProperty] public Chat Messages { get; set; }
         [BindProperty] public Chat NewMessage { get; set; }
@@ -68,17 +67,6 @@ namespace Lab3.Pages.Collaboration
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("/DBLogin");
             }
-        }
-
-        public IActionResult OnPost()
-        {
-            if (NewCollab.Name != null)
-            {
-                DBClass.InsertNewCollabArea(NewCollab);
-
-                DBClass.Lab3DBConnection.Close();
-            }
-            return Page();
         }
 
         //public IActionResult OnPostCreate()
