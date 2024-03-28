@@ -63,17 +63,6 @@ namespace Lab3.Pages.Collaboration
             }
         }
 
-        public IActionResult OnPost()
-        {
-            if (NewCollab.Name != null)
-            {
-                DBClass.InsertNewCollabArea(NewCollab);
-
-                DBClass.Lab3DBConnection.Close();
-            }
-            return Page();
-        }
-
         public IActionResult OnPostChat()
         {
             if (!string.IsNullOrEmpty(NewChatMessage))

@@ -371,3 +371,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+/.vs/slnx.sqlite
+/.vs/Tech-Titans/FileContentIndex/4718cb3a-ed12-40fa-b7c3-0ee498dc1b7a.vsidx
+/.vs/Tech-Titans/FileContentIndex/55a32b14-73fc-43f0-a659-485c9a25618b.vsidx
+/.vs/VSWorkspaceState.json
+/.vs/Tech-Titans/v17/.wsuo
