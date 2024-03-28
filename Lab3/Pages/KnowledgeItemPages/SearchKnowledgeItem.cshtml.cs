@@ -187,5 +187,14 @@ namespace Lab3.Pages.KnowledgeItemPages
             DBClass.Lab3DBConnection.Close();
             return KnowledgeItems;
         }
+        public IActionResult OnPostClear()
+        {
+            ModelState.Clear();
+            LoadUsers();
+            LoadKnowledge();
+            KeywordSearch = null;
+            SelectedUserID = 0;
+            return Page();
+        }
     }
 }

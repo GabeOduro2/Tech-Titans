@@ -39,21 +39,11 @@
     <button class="btn-outline-secondary" asp-page="AddKnowledgeItem" asp-page-handler="PopulateHandler" formnovalidate>Populate</button>
     <button class="btn-outline-secondary" asp-page-handler="Clear">Clear</button>
     <br />
-    <br />
-    <button class="btn-primary" asp-page-handler="CSVFile">Add CSV File</button>
-    @{
-        if (Model.ErrorMessage != null)
-        {
-            <div class="alert alert-danger">
-                @Model.ErrorMessage
-            </div>
-        }
-    }
 </form>
 
 @{
     if (Model.CreateMessage != null)
     {
-        <p> @Model.CreateMessage</p>
+        <p class="text-success"> @Model.CreateMessage</p>
     }
 }
