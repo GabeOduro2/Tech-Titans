@@ -3,16 +3,7 @@
 @{
 }
 
-<form method="post" enctype="multipart/form-data" asp-action="FileUpload">
-    <div class="form-group">
-        <div class="col-md-10">
-            <p>Choose Files to Upload:</p>
-            <input asp-for="FileList" type="file" multiple />
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="submit" value="Upload File(s)" />
-        </div>
-    </div>
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="fileUpload" />
+    <input type="submit" value="Upload" />
 </form>

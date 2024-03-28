@@ -13,74 +13,92 @@ namespace Lab3.Pages.Collaboration
         [BindProperty] public List<SelectListItem> SelectKnowledgeItem { get; set; }
         [BindProperty] public List<KnowledgeItemModel> KnowledgeItems { get; set; } = new List<KnowledgeItemModel>();
         [BindProperty] public CollabClass CurrentCollab { get; set; }
-        [BindProperty] public Chat Messages { get; set; }
-        [BindProperty] public Chat NewMessage { get; set; }
         [BindProperty] public string? ErrorMessage { get; set; }
+        [BindProperty] public string NewChatMessage { get; set; }
+        public List<Chat> ChatMessages { get; set; }
 
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("username") != null)
             {
-                // Display page
+                // Retrieve chat messages from the database
+                ChatMessages = DBClass.GetChatMessages();
+
+                // Populate collaboration areas dropdown
                 SqlDataReader CollabReader = DBClass.GeneralReaderQuery("SELECT * FROM Collaboration");
-
                 CollabAreas = new List<SelectListItem>();
-
                 while (CollabReader.Read())
                 {
-                    CollabAreas.Add(
-                        new SelectListItem(
-                            CollabReader["Name"].ToString(),
-                            CollabReader["CollabID"].ToString()));
+                    CollabAreas.Add(new SelectListItem(
+                        CollabReader["Name"].ToString(),
+                        CollabReader["CollabID"].ToString()));
                 }
-
                 DBClass.Lab3DBConnection.Close();
 
-
+                // Populate knowledge items dropdown
                 SqlDataReader knowledgeReader = DBClass.KnowledgeReader();
-
                 SelectKnowledgeItem = new List<SelectListItem>();
-
                 while (knowledgeReader.Read())
                 {
                     KnowledgeItems.Add(new KnowledgeItemModel
                     {
-                        KnowledgeId = Int32.Parse(knowledgeReader["KnowledgeID"].ToString()),
+                        KnowledgeId = Convert.ToInt32(knowledgeReader["KnowledgeID"]),
                         Title = knowledgeReader["Title"].ToString(),
                         Category = knowledgeReader["Category"].ToString(),
                         Information = knowledgeReader["Information"].ToString()
                     });
-
-                    SelectKnowledgeItem.Add(
-                        new SelectListItem(
-                            knowledgeReader["Title"].ToString(),
-                            knowledgeReader["KnowledgeID"].ToString()));
+                    SelectKnowledgeItem.Add(new SelectListItem(
+                        knowledgeReader["Title"].ToString(),
+                        knowledgeReader["KnowledgeID"].ToString()));
                 }
-
                 DBClass.Lab3DBConnection.Close();
 
                 return Page();
             }
             else
             {
-                // Send user to login page
+                // Redirect to login page if user not logged in
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("/DBLogin");
             }
         }
 
-        //public IActionResult OnPostCreate()
-        //{
-        //    NewMessage.UserName = HttpContext.Session.GetString("username");
-        //    NewMessage.Message = 
-        //    return Page();
-        //}
+        public IActionResult OnPost()
+        {
+            if (NewCollab.Name != null)
+            {
+                DBClass.InsertNewCollabArea(NewCollab);
+
+                DBClass.Lab3DBConnection.Close();
+            }
+            return Page();
+        }
 
         public IActionResult OnPostChat()
         {
+            if (!string.IsNullOrEmpty(NewChatMessage))
+            {
+                string username = HttpContext.Session.GetString("username");
+                DateTime timestamp = DateTime.Now;
+
+                // Create a new Chat object with the submitted message, username, and timestamp
+                Chat newChat = new Chat
+                {
+                    Username = username,
+                    Message = NewChatMessage,
+                    Timestamp = timestamp
+                };
+
+                // Insert the new chat message into the database
+                DBClass.InsertChatMessage(newChat);
+
+                // Redirect back to the page
+                return RedirectToPage();
+            }
 
             return Page();
         }
+
         public IActionResult OnPostCSVFile()
         {
             return RedirectToPage("/FileUpload");
