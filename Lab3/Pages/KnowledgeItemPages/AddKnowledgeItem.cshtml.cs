@@ -16,8 +16,6 @@ namespace Lab3.Pages.KnowledgeItemPages
         [BindProperty] public string? Category { get; set; }
         public string[] Categories = new[] { "Knowledge Item", "SWOT", "PEST" };
         [BindProperty] public string? CreateMessage { get; set; }
-        [BindProperty] public string? ErrorMessage { get; set; }
-
 
         public IActionResult OnGet(KnowledgeItemModel category)
         {
@@ -33,7 +31,6 @@ namespace Lab3.Pages.KnowledgeItemPages
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("/DBLogin");
             }
-            return Page();
         }
 
         public void LoadUsers()
@@ -103,10 +100,6 @@ namespace Lab3.Pages.KnowledgeItemPages
             //NewItem.UserID = null;
             NewItem.Information = "";
             return Page();
-        }
-        public IActionResult OnPostCSVFile() 
-        {
-            return RedirectToPage("/FileUpload");
         }
     }
 }
