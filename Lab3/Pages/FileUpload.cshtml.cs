@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.IO;
 using CsvHelper;
+using System.Data.SqlClient;
 
 namespace Lab3.Pages
 {
@@ -20,102 +21,88 @@ namespace Lab3.Pages
             // https://code-maze.com/file-upload-aspnetcore-mvc/
         }
 
-        public IActionResult OnPost()
+        public async Task OnPostAsync(IFormFile fileUpload)
         {
+            var filePath = Path.Combine("wwwroot", "fileupload", fileUpload.FileName);
 
-            var filePaths = new List<string>();
-            foreach (var formFile in FileList)
+            using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                if (formFile.Length > 0)
-                {
-                    // full path to file in temp location
-                    var filePath = Directory.GetCurrentDirectory() + @"\wwwroot\fileupload\" + formFile.FileName;
-                    filePaths.Add(filePath);
-                    // Create local copy of file location
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        formFile.CopyTo(stream);
-                    }
-                    ProcessCsvFile(filePath);
-                }
+                await fileUpload.CopyToAsync(stream);
             }
 
-
-            return RedirectToPage("FileHandling");
+            await ProcessCsvAsync(filePath);
         }
-        public void ProcessCsvFile(string filePath)
+        private async Task ProcessCsvAsync(string filePath)
         {
             using (var reader = new StreamReader(filePath))
-
-            using (var csv = new CsvReader(reader, new CsvHelper.Configuration.CsvConfiguration(CultureInfo.InvariantCulture)))
-
+            using (var csv = new CsvHelper.CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<dynamic>().ToList();
+                csv.Read();
+                csv.ReadHeader();
+                string[] headers = csv.Context.Reader.HeaderRecord;
 
-                var columnHeaders = records.First();
+                // You can infer data types here if needed or default to string
+                // For simplicity, I'm assuming all data as string
 
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                // Create SQL table based on headers
+                string tableName = "DynamicTable_" + DateTime.Now.Ticks; // Generating a unique table name
+                await CreateSqlTableAsync(headers, tableName);
 
-                string createTableQuery = CreateTableQuery(fileName, columnHeaders);
-
-                DBClass.InsertQueryCSV(createTableQuery);
-
-                string tableName = fileName;
-
-                string insertDataQuery = InsertDataQuery(records.Skip(1), columnHeaders, tableName);
-
-                DBClass.InsertQueryCSV(insertDataQuery);
-
-            }
-
-        }
-
-        public string CreateTableQuery(string fileName, dynamic columnHeaders)
-
-        {
-            string tableName = Path.GetFileNameWithoutExtension(fileName);
-
-            string createTableQuery = $"CREATE TABLE {tableName} (";
-
-            foreach (var columnHeader in columnHeaders)
-
-            {
-                createTableQuery += $"{columnHeader} NVARCHAR(MAX), ";
-            }
-
-            createTableQuery = createTableQuery.TrimEnd(',', ' ') + ")";
-
-            return createTableQuery;
-        }
-
-        public string InsertDataQuery(IEnumerable<dynamic> data, dynamic columnHeaders, string tableName)
-
-        {
-            string insertDataQuery = $"INSERT INTO {tableName} (";
-
-            var columns = ((IDictionary<string, object>)columnHeaders).Keys.ToList();
-
-            foreach (var columnHeader in columnHeaders)
-
-            {
-                insertDataQuery += $"{columnHeader}, ";
-            }
-
-            insertDataQuery = insertDataQuery.TrimEnd(',', ' ') + ") VALUES ";
-
-            foreach (var record in data)
-            {
-                insertDataQuery += "(";
-                foreach (var columnHeader in columns)
+                while (csv.Read())
                 {
-                    var value = ((IDictionary<string, object>)record)[columnHeader];
-                    insertDataQuery += $"'{value}', ";
+                    var record = new List<string>();
+                    foreach (var header in headers)
+                    {
+                        record.Add(csv.GetField(header));
+                    }
+
+                    // Insert the record into the database
+                    await InsertRecordIntoTableAsync(record, tableName,headers);
                 }
-                insertDataQuery = insertDataQuery.TrimEnd(',', ' ') + "), ";
             }
-            return insertDataQuery.TrimEnd(',', ' ');
         }
+        private async Task CreateSqlTableAsync(string[] headers, string tableName)
+        {
+            using (var connection = new SqlConnection("Server=Localhost;Database=Lab3;Trusted_Connection=True"))
+            {
+                await connection.OpenAsync();
+                var createTableCommand = new SqlCommand(GetCreateTableSql(headers, tableName), connection);
+                await createTableCommand.ExecuteNonQueryAsync();
+            }
+        }
+
+        private string GetCreateTableSql(string[] headers, string tableName)
+        {
+            var columns = string.Join(", ", headers.Select(header => $"[{header}] NVARCHAR(MAX)"));
+            return $"CREATE TABLE [{tableName}] ({columns})";
+        }
+        private async Task InsertRecordIntoTableAsync(List<string> record, string tableName, string[] headers)
+        {
+            using (var connection = new SqlConnection("Server=Localhost;Database=Lab3;Trusted_Connection=True"))
+            {
+                await connection.OpenAsync();
+
+                var sql = GetInsertSql(record, tableName, headers);
+                var insertCommand = new SqlCommand(sql, connection);
+
+                // Add parameters to SqlCommand
+                for (int i = 0; i < record.Count; i++)
+                {
+                    insertCommand.Parameters.AddWithValue($"@param{i}", record[i]);
+                }
+
+                await insertCommand.ExecuteNonQueryAsync();
+            }
+        }
+
+        private string GetInsertSql(List<string> record, string tableName, string[] headers)
+        {
+            var columns = string.Join(", ", headers.Select(header => $"[{header}]"));
+            var parameters = string.Join(", ", headers.Select((_, i) => $"@param{i}"));
+            var sql = $"INSERT INTO [{tableName}] ({columns}) VALUES ({parameters})";
+
+            return sql;
+        }
+
     }
-
 }
-
