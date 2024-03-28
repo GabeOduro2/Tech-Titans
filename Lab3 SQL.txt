@@ -53,6 +53,13 @@ CREATE TABLE Collaboration(
 	PlanID int FOREIGN KEY REFERENCES [Plan](PlanID),
 );
 
+CREATE TABLE Chat (
+	Chat_ID INT PRIMARY KEY IDENTITY,
+	Message TEXT,
+	Username VARCHAR(255),
+	Timestamp DATETIME DEFAULT GETDATE()
+);
+
 -- Insert Statements:
 
 -- Insert into [User] table
