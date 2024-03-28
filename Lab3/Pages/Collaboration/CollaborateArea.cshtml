@@ -3,30 +3,26 @@
 @{
 }
 
-<h1>Existing Collaboration Areas:</h1>
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+<nav class="navbar navbar-expand-md navbar-light bg-light border-bottom">
     <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-page="/Index">Work In Progress</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
                 @foreach (var item in Model.CollabAreas)
                 {
-                <li class="nav-item">
-                <a class="nav-link" href="#">@item</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">@item</a>
+                    </li>
                 }
-                <li class="nav-item">
-                    <button class="nav-link btn btn-primary text-dark" asp-area="" asp-page="NewCollabArea">Create New Collaboration</button>
-                </li>
             </ul>
         </div>
-        @* Navigation items *@
     </div>
 </nav>
+
 <br />
 
 <form method="post">
@@ -34,7 +30,7 @@
 </form>
 <br />
 
-<div class="container-fluid">
+@* <div class="container-fluid">
     <div class="row">
         <div class="col-md-8">
             <h1>Create a New Collaboration Area</h1>
@@ -45,54 +41,9 @@
             </form>
             <br />
 
-            <h1>Knowledge Item:</h1>
-            <h1>Include Knowledge Item:</h1>
-            <form method="post">
-                <p>Choose Knowledge Item:</p>
-                <select asp-for="SelectKnowledgeItem" asp-items="Model.SelectKnowledgeItem">
-                    <option value="">Choose an Item</option>
-                </select>
-                <button type="submit" asp-page-handler="AddKnowledge">Create</button>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <aside>
-                <h1>Chat</h1>
-                <form method="post">
-                    <input type="text" asp-for="NewChatMessage" placeholder="Type Message Here..." />
-                    <button type="submit" asp-page-handler="Chat">Send</button>
-                </form>
-                <div class="chat-messages">
-                    @foreach (var message in Model.ChatMessages)
-                    {
-                        <div class="message">
-                            <strong>@message.Username:</strong> @message.Message - @message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")
-                        </div>
-                    }
-                </div>
-            </aside>
         </div>
     </div>
-</div>
-
-<style>
-    /* Custom CSS styles for chat messages */
-    .chat-messages {
-        padding: 10px;
-        background-color: #f0f0f0;
-        border-radius: 5px;
-        height: 300px;
-        overflow-y: auto;
-    }
-
-    .message {
-        margin-bottom: 10px;
-    }
-
-    .message strong {
-        font-weight: bold;
-    }
-</style>
+</div> *@
 
 <h1>Include Knowledge Item:</h1>
 <form method="post">
@@ -116,4 +67,52 @@
         </div>
     }
 }
-
+@* Chat Section *@
+<div class="container">
+    <div class="row">
+        @* <aside class="col-md-4">
+            <h2>Chat Section</h2>
+            <form method="post" action="/Chat/SendMessage">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" asp-for="CurrentCollab.Chats" placeholder="Type Message Here" />
+                    <button class="btn btn-primary" type="submit" asp-page-handler="Chat">Send</button>
+                </div>
+            </form>
+        </aside> *@
+        <aside>
+            <h1>Chat</h1>
+            <form method="post">
+                <input type="text" asp-for="NewChatMessage" placeholder="Type Message Here..." />
+                <button type="submit" asp-page-handler="Chat">Send</button>
+            </form>
+            <div class="chat-messages">
+                @foreach (var message in Model.ChatMessages)
+                {
+                    <div class="message">
+                        <strong>@message.Username:</strong> @message.Message - @message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")
+                    </div>
+                }
+            </div>
+        </aside>
+@* Create Collab *@
+        <section class="col-md-8">
+            <h2>Create a New Collaboration Area</h2>
+            <form method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" asp-for="NewCollab.Name" placeholder="Enter New Collaboration Area Name" />
+                    <button class="btn btn-success" type="submit" asp-page-handler="Create">Create</button>
+                </div>
+            </form>
+@* Include Knowledge Item *@
+            <h2>Include Knowledge Item</h2>
+            <form method="post">
+                <div class="input-group mb-3">
+                    <select class="form-select" asp-for="SelectKnowledgeItem" asp-items="Model.SelectKnowledgeItem">
+                        <option value="">Choose an Item</option>
+                    </select>
+                    <button class="btn btn-info" type="submit" asp-page-handler="AddKnowledge">Include</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
