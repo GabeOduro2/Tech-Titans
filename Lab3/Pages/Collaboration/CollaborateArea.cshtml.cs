@@ -12,8 +12,8 @@ namespace Lab3.Pages.Collaboration
         [BindProperty] public List<SelectListItem> CollabAreas { get; set; }
         [BindProperty] public List<SelectListItem> SelectKnowledgeItem { get; set; }
         [BindProperty] public List<KnowledgeItemModel> KnowledgeItems { get; set; } = new List<KnowledgeItemModel>();
-        [BindProperty] public CollabClass NewCollab { get; set; }
         [BindProperty] public CollabClass CurrentCollab { get; set; }
+        [BindProperty] public string? ErrorMessage { get; set; }
         [BindProperty] public string NewChatMessage { get; set; }
         public List<Chat> ChatMessages { get; set; }
 
@@ -63,17 +63,6 @@ namespace Lab3.Pages.Collaboration
             }
         }
 
-        public IActionResult OnPost()
-        {
-            if (NewCollab.Name != null)
-            {
-                DBClass.InsertNewCollabArea(NewCollab);
-
-                DBClass.Lab3DBConnection.Close();
-            }
-            return Page();
-        }
-
         public IActionResult OnPostChat()
         {
             if (!string.IsNullOrEmpty(NewChatMessage))
@@ -99,5 +88,9 @@ namespace Lab3.Pages.Collaboration
             return Page();
         }
 
+        public IActionResult OnPostCSVFile()
+        {
+            return RedirectToPage("/FileUpload");
+        }
     }
 }

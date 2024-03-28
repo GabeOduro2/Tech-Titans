@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model Lab3.Pages.Collaboration.CollaborateAreaModel
 @{
 }
@@ -6,9 +6,32 @@
 <h1>Existing Collaboration Areas:</h1>
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
     <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-page="/Index">Work In Progress</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                @foreach (var item in Model.CollabAreas)
+                {
+                <li class="nav-item">
+                <a class="nav-link" href="#">@item</a>
+                </li>
+                }
+                <li class="nav-item">
+                    <button class="nav-link btn btn-primary text-dark" asp-area="" asp-page="NewCollabArea">Create New Collaboration</button>
+                </li>
+            </ul>
+        </div>
         @* Navigation items *@
     </div>
 </nav>
+<br />
+
+<form method="post">
+    <button type="submit" class="btn btn-primary" asp-page="NewCollabArea">Create New Collaboration</button>
+</form>
 <br />
 
 <div class="container-fluid">
@@ -39,7 +62,6 @@
                     <input type="text" asp-for="NewChatMessage" placeholder="Type Message Here:" />
                     <button type="submit" asp-page-handler="Chat">Send</button>
                 </form>
-
                 <div class="chat-messages">
                     @foreach (var message in Model.ChatMessages)
                     {
@@ -71,3 +93,27 @@
         font-weight: bold;
     }
 </style>
+
+<h1>Include Knowledge Item:</h1>
+<form method="post">
+    <p>Choose Knowledge Item:</p>
+    <select asp-for="SelectKnowledgeItem" asp-items="Model.SelectKnowledgeItem">
+        <option value="">Choose an Item</option>
+    </select>
+    <button type="submit" asp-page-handler="AddKnowledge">Create</button>
+</form>
+<br />
+
+<h1>Include CSV File:</h1>
+<form method="post">
+    <button class="btn-primary" type="submit" asp-page-handler="CSVFile">Add CSV File</button>
+</form>
+@{
+    if (Model.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @Model.ErrorMessage
+        </div>
+    }
+}
+
