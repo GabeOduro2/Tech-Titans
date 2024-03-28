@@ -13,6 +13,7 @@
 <form method="post" asp-page-handler="Search">
     <input type="text" asp-for="KeywordSearch" placeholder="Enter Keyword:" />
     <button type="submit" class="btn btn-primary">Search</button>
+    <button class="btn-outline-secondary" asp-page-handler="Clear">Clear</button>
 </form>
  <br />
  <br />
@@ -23,6 +24,7 @@
         <option value="">Select User-></option>
     </select>
     <button type="submit" class="btn btn-primary">Filter</button>
+    <button class="btn-outline-secondary" asp-page-handler="Clear">Clear</button>
 </form>
 <br/>
 

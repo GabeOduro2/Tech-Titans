@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model Lab3.Pages.Collaboration.CollaborateAreaModel
 @{
 }
@@ -19,33 +19,80 @@
                 <a class="nav-link" href="#">@item</a>
                 </li>
                 }
+                <li class="nav-item">
+                    <button class="nav-link btn btn-primary text-dark" asp-area="" asp-page="NewCollabArea">Create New Collaboration</button>
+                </li>
             </ul>
         </div>
+        @* Navigation items *@
     </div>
 </nav>
 <br />
 
-<aside>
-    <h1>Chat Section</h1>
-
-@*     FIGURE OUT HOW TO MAP MESSAGES CORRECTELY IN MODEL!
- *@
-    <form method="post" action="/Chat/SendMessage">
-        <input asp-for="CurrentCollab.Chats" placeholder="Type Message Here:" />
-        <button type="submit">Send</button>
-    </form>
-</aside>
-
-<h1>Create a New Collaboration Area</h1>
 <form method="post">
-    <input asp-for="NewCollab.Name" />
-    <br />
-    <button type="submit" asp-page-handler="Create">Create</button>
+    <button type="submit" class="btn btn-primary" asp-page="NewCollabArea">Create New Collaboration</button>
 </form>
 <br />
 
-<h1>Knowledge Item:</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Create a New Collaboration Area</h1>
+            <form method="post">
+                <input asp-for="NewCollab.Name" />
+                <br />
+                <button type="submit" asp-page-handler="Create">Create</button>
+            </form>
+            <br />
 
+            <h1>Knowledge Item:</h1>
+            <h1>Include Knowledge Item:</h1>
+            <form method="post">
+                <p>Choose Knowledge Item:</p>
+                <select asp-for="SelectKnowledgeItem" asp-items="Model.SelectKnowledgeItem">
+                    <option value="">Choose an Item</option>
+                </select>
+                <button type="submit" asp-page-handler="AddKnowledge">Create</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <aside>
+                <h1>Chat</h1>
+                <form method="post">
+                    <input type="text" asp-for="NewChatMessage" placeholder="Type Message Here..." />
+                    <button type="submit" asp-page-handler="Chat">Send</button>
+                </form>
+                <div class="chat-messages">
+                    @foreach (var message in Model.ChatMessages)
+                    {
+                        <div class="message">
+                            <strong>@message.Username:</strong> @message.Message - @message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")
+                        </div>
+                    }
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom CSS styles for chat messages */
+    .chat-messages {
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        height: 300px;
+        overflow-y: auto;
+    }
+
+    .message {
+        margin-bottom: 10px;
+    }
+
+    .message strong {
+        font-weight: bold;
+    }
+</style>
 
 <h1>Include Knowledge Item:</h1>
 <form method="post">
@@ -55,3 +102,18 @@
     </select>
     <button type="submit" asp-page-handler="AddKnowledge">Create</button>
 </form>
+<br />
+
+<h1>Include CSV File:</h1>
+<form method="post">
+    <button class="btn-primary" type="submit" asp-page-handler="CSVFile">Add CSV File</button>
+</form>
+@{
+    if (Model.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @Model.ErrorMessage
+        </div>
+    }
+}
+

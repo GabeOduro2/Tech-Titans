@@ -160,51 +160,32 @@ namespace Lab3.Pages.DB
         {
             string sqlQuery = "SELECT * FROM Chat";
 
-            SqlCommand GetMessages = new SqlCommand();
-            GetMessages.Connection = Lab3DBConnection;
-            GetMessages.Connection.ConnectionString = Lab3DBConnString;
-            GetMessages.CommandText = sqlQuery;
-            GetMessages.Connection.Open();
+            SqlCommand cmdGetMessages = new SqlCommand(sqlQuery, Lab3DBConnection);
 
-            SqlDataReader tempReader = GetMessages.ExecuteReader(); // Or Scalar/ NonQuery
+            Lab3DBConnection.Open();
+
+            SqlDataReader tempReader = cmdGetMessages.ExecuteReader();
 
             return tempReader;
         }
 
-        //public void SendMessage(Chat c)
-        //{
-
-        //    string sqlQuery = "INSERT INTO Chat (CollabID, Sender, Text, Timestamp) VALUES (@CollabID, @Sender, @Text, GETDATE())";
-        //    using (SqlConnection connection = new SqlConnection("Lab3DBConnString"))
-        //    {
-        //        using (SqlCommand command = new SqlCommand(sqlQuery, Lab3DBConnection))
-        //        {
-        //            command.Parameters.AddWithValue("@CollabID", c.CollabID);
-        //            command.Parameters.AddWithValue("@Sender", c.FirstName);
-        //            command.Parameters.AddWithValue("@Text", c.Message);
-
-        //            Lab3DBConnection.Open();
-        //            command.ExecuteNonQuery();
-        //        }
-        //    }
-        //}
-
         public static void InsertNewCollabArea(CollabClass c)
         {
-            String sqlQuery = "INSERT INTO Collaboration " +
-                "(Name, Chat) VALUES('";
-            using (SqlConnection connection = new SqlConnection("Lab3DBConnString"))
+            string sqlQuery = "INSERT INTO Collaboration (Name, Chat) VALUES (@Name, @Chats)";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
             {
-                using (SqlCommand cmd = new SqlCommand(sqlQuery, Lab3DBConnection))
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
                 {
                     cmd.Parameters.AddWithValue("@Name", c.Name);
                     cmd.Parameters.AddWithValue("@Chats", c.Chats);
 
-                    Lab3DBConnection.Open();
+                    connection.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
 
         public static void InsertNewPlan(Plan p)
         {
@@ -308,5 +289,60 @@ namespace Lab3.Pages.DB
 
             cmdLogin.ExecuteNonQuery();
         }
+
+        public static void InsertChatMessage(Chat chat)
+        {
+            string sqlQuery = "INSERT INTO Chat (Message, Username, Timestamp) VALUES (@Message, @Username, @Timestamp)";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Message", chat.Message);
+                    cmd.Parameters.AddWithValue("@Username", chat.Username);
+                    cmd.Parameters.AddWithValue("@Timestamp", chat.Timestamp);
+
+                    connection.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static List<Chat> GetChatMessages()
+        {
+            List<Chat> chatMessages = new List<Chat>();
+
+            string sqlQuery = "SELECT Message, Username, Timestamp FROM Chat";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    connection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string message = reader["Message"].ToString();
+                        string username = reader["Username"].ToString();
+                        DateTime timestamp = Convert.ToDateTime(reader["Timestamp"]);
+
+                        Chat chat = new Chat
+                        {
+                            Username = username,
+                            Message = message,
+                            Timestamp = timestamp
+                        };
+
+                        chatMessages.Add(chat);
+                    }
+                }
+            }
+
+            return chatMessages;
+        }
+
     }
 }

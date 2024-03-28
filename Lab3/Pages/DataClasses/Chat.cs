@@ -2,9 +2,8 @@
 {
     public class Chat
     {
-        public int CollabID { get; set; }
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string Message { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }
