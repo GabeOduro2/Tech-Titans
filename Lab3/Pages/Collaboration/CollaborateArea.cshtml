@@ -19,6 +19,9 @@
                 <a class="nav-link" href="#">@item</a>
                 </li>
                 }
+                <li class="nav-item">
+                    <button class="nav-link btn btn-primary text-dark" asp-area="" asp-page="NewCollabArea">Create New Collaboration</button>
+                </li>
             </ul>
         </div>
     </div>
@@ -36,11 +39,8 @@
     </form>
 </aside>
 
-<h1>Create a New Collaboration Area</h1>
 <form method="post">
-    <input asp-for="NewCollab.Name" />
-    <br />
-    <button type="submit" asp-page-handler="Create">Create</button>
+    <button type="submit" class="btn btn-primary" asp-page="NewCollabArea">Create New Collaboration</button>
 </form>
 <br />
 
