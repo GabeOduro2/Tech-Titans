@@ -69,13 +69,6 @@ namespace Lab3.Pages.Collaboration
             }
         }
 
-        //public IActionResult OnPostCreate()
-        //{
-        //    NewMessage.UserName = HttpContext.Session.GetString("username");
-        //    NewMessage.Message = 
-        //    return Page();
-        //}
-
         public IActionResult OnPostChat()
         {
 
