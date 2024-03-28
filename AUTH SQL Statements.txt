@@ -1,0 +1,9 @@
+-- Code for AUTH table
+
+  CREATE TABLE HashedCredentials(
+	HashedCredentialsID int Identity(1,1) PRIMARY KEY,
+	Username nvarchar(200),
+	Password nvarchar(200)
+  );
+
+  INSERT INTO HashedCredentials (Username, Password) VALUES ('admin','1000:qEVNXnHG9DSGkElwKdpmv9zPnnNIurtp:LvGny7sjFoQEfHd0T9P6hTy+Tvw=');
