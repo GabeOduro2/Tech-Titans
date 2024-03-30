@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Lab3",
+    "\\Lab3\\Pages",
+    "\\Lab3\\Pages\\Collaboration"
   ],
-  "SelectedNode": "\\Lab3.sln",
+  "SelectedNode": "\\Lab3\\Pages\\Collaboration\\CollaborateArea.cshtml",
   "PreviewInSolutionExplorer": false
 }

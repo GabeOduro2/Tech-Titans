@@ -1,4 +1,4 @@
-﻿@page
+﻿@* @page
 @model Lab3.Pages.FileUploadModel
 @{
 }
@@ -6,4 +6,27 @@
 <form method="post" enctype="multipart/form-data">
     <input type="file" name="fileUpload" />
     <input type="submit" value="Upload" />
+</form> *@
+
+@page
+@model Lab3.Pages.FileUploadModel
+@{
+    ViewData["Title"] = "File Upload";
+}
+
+<h1>Upload a CSV File</h1>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewData["Message"]
+    </div>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="fileUpload">Choose a CSV File:</label>
+        <input type="file" class="form-control-file" name="fileUpload" id="fileUpload">
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
 </form>

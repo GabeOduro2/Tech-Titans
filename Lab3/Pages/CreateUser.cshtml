@@ -65,47 +65,48 @@
 <form asp-page="CreateUser" method="post" class="needs-validation" novalidate>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label asp-for="NewUser.Username">Enter New Username</label>
-            <input asp-for="NewUser.Username" placeholder="Username:" class="form-control" />
+            <label asp-for="NewUser.Username">Enter Username:</label>
+            <input asp-for="NewUser.Username" class="form-control" />
             <span asp-validation-for="NewUser.Username" class="text-danger"></span>
         </div>
         <div class="form-group col-md-6">
-            <label asp-for="NewUser.Password">Enter New Password</label>
-            <input asp-for="NewUser.Password" placeholder="Password:" class="form-control" />
+            <label asp-for="NewUser.Password">Enter Password:</label>
+            <input asp-for="NewUser.Password" class="form-control" />
             <span asp-validation-for="NewUser.Password" class="text-danger"></span>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label asp-for="NewUser.FirstName">Enter New First Name</label>
-            <input asp-for="NewUser.FirstName" placeholder="First Name:" class="form-control" />
+            <label asp-for="NewUser.FirstName">Enter First Name:</label>
+            <input asp-for="NewUser.FirstName" class="form-control" />
             <span asp-validation-for="NewUser.FirstName" class="text-danger"></span>
         </div>
         <div class="form-group col-md-6">
-            <label asp-for="NewUser.LastName">Enter New Last Name</label>
-            <input asp-for="NewUser.LastName" placeholder="Last Name:" class="form-control" />
+            <label asp-for="NewUser.LastName">Enter Last Name:</label>
+            <input asp-for="NewUser.LastName" class="form-control" />
             <span asp-validation-for="NewUser.LastName" class="text-danger"></span>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label asp-for="NewUser.Email">Enter New Email Address</label>
-            <input asp-for="NewUser.Email" placeholder="Email:" class="form-control" />
+            <label asp-for="NewUser.Email">Enter Email Address:</label>
+            <input asp-for="NewUser.Email" class="form-control" />
         </div>
         <div class="form-group col-md-6">
-            <label asp-for="NewUser.Phone">Enter New Phone Number</label>
-            <input asp-for="NewUser.Phone" placeholder="Phone #:" class="form-control" />
+            <label asp-for="NewUser.Phone">Enter Phone Number:</label>
+            <input asp-for="NewUser.Phone" class="form-control" />
         </div>
     </div>
     <div class="form-group">
-        <label asp-for="NewUser.Address">Enter New Address</label>
-        <input asp-for="NewUser.Address" placeholder="Address:" class="form-control" style="width: 650px;" />
+        <label asp-for="NewUser.Address">Enter Address:</label>
+        <input asp-for="NewUser.Address" class="form-control" style="width: 650px;" />
     </div>
     <div class="form-group">
-        <label asp-for="NewUser.UserType">Enter New Type</label>
-        <input asp-for="NewUser.UserType" placeholder="Type:" class="form-control" style="width: 325px;" />
+        <label asp-for="NewUser.UserType">Enter Account Type:</label>
+        <input asp-for="NewUser.UserType" class="form-control" style="width: 325px;" />
         <span asp-validation-for="NewUser.UserType" class="text-danger"></span>
     </div>
+    <br />
 
     @{
         if (Model.CreateMessage != null)
@@ -114,7 +115,7 @@
         }
     }
     <div class="form-group">
-        <input type="submit" value="Sign Up ->" class="btn btn-primary" />
+        <input type="submit" value="Sign Up" class="btn btn-primary" />
         <button class="btn btn-outline-secondary" asp-page-handler="Clear">Clear</button>
     </div>
 </form>

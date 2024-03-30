@@ -38,14 +38,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Create A Plan</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/DBDisplay">User Data Preview</a>
-                        </li>
                         @{
                             if (Context.Session.GetString("username") != null)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-page="/SecureLoginLanding">@Context.Session.GetString("username")</a>
+                                </li>
+                                <li class="nav-item">
+                                    <form asp-page="DBLogin" asp-page-handler="LogoutHandler">
+                                        <input type="submit" class="btn btn-danger" value="Logout">
+                                    </form>
                                 </li>
                             }
                             else
@@ -65,13 +67,10 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-        @* <aside>
-
-        </aside> *@
     </div>
     <footer class="border-top footer text-primary" >
         <div class="container">
-            &copy; 2024 - Lab3 -<a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - Madison County -<a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
