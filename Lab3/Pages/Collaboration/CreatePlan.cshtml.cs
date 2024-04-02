@@ -39,7 +39,6 @@ namespace Lab3.Pages.Collaboration
                 Message = NewPlan.Name + " has been created";
             }
             LoadUsers();
-            // Add logic to redirect to page after creating in DB
             return Page();
         }
 
@@ -61,15 +60,5 @@ namespace Lab3.Pages.Collaboration
             }
             DBClass.Lab3DBConnection.Close();
         }
-
-        //public IActionResult OnPostAddStep()
-        //{
-        //    if (NewPlan.Name != null)
-        //    {
-        //        DBClass.InsertNewPlan(NewPlan);
-
-        //    }
-        //    return Page();
-        //}
     }
 }
