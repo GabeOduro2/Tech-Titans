@@ -44,12 +44,12 @@ namespace Lab3.Pages
                 {
                     Username = "sampleUsername",
                     Password = "samplePassword",
-                    FirstName = "John",
-                    LastName = "Doe",
-                    Email = "john@example.com",
-                    Phone = "1234567890",
+                    FirstName = "Jim",
+                    LastName = "Jewett",
+                    Email = "jewettjw@jmu.edu",
+                    Phone = "5405683059",
                     Address = "123 Sample St",
-                    UserType = "sampleType"
+                    UserType = "admin"
                 };
             }
             return Page();

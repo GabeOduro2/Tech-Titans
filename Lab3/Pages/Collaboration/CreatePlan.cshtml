@@ -7,28 +7,16 @@
 <form method="post">
     <h1>Create a New Plan</h1>
     <div>
-        <label asp-for="NewPlan.Name">Enter Plan's Title:</label>
-        <input asp-for="NewPlan.Name" placeholder="Plan Name:" />
+        <label asp-for="NewPlan.Name">Plan Title:</label>
+        <input asp-for="NewPlan.Name" />
+        <br />
         <span asp-validation-for="NewPlan.Name" class="text-danger"></span>
     </div>
     Share Plan with others:
     <select asp-for="SelectedUsers" asp-items="Model.Users" multiple class="form-select">
-        <option value="" disabled>Select Users Below to Share Plan With Them -> </option>
+        <option value="" disabled></option>
     </select>
     <br />
     <button type="submit" class="btn btn-primary" asp-page-handler="Save">Save Plan</button>
 </form>
 
-    @* Add Steps After Creating Plan!
-        <div>
-        <label asp-for="NewPlan.Steps">Add Steps:</label>
-        <div id="stepContainer">
-            <!-- Initial input field -->
-            @for (int i = 0; i < Model.NumSteps + 1; i++)
-            {
-                <input asp-for="NewPlan.Steps[i]" />
-            }
-        </div>
-        <!-- Button to add more input fields -->
-        <button type="submit" name="addStepBtn" value="addStep">Add Step -></button>
-    </div> *@

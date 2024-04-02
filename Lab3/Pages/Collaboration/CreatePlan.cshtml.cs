@@ -61,15 +61,5 @@ namespace Lab3.Pages.Collaboration
             }
             DBClass.Lab3DBConnection.Close();
         }
-
-        //public IActionResult OnPostAddStep()
-        //{
-        //    if (NewPlan.Name != null)
-        //    {
-        //        DBClass.InsertNewPlan(NewPlan);
-
-        //    }
-        //    return Page();
-        //}
     }
 }

@@ -86,9 +86,9 @@ namespace Lab3.Pages.KnowledgeItemPages
                 ModelState.Clear();
                 Category = "Knowledge Item";
                 NewItem.Category = Category;
-                NewItem.Title = "Surf Swag";
+                NewItem.Title = "Budget 2024";
                 NewItem.UserID = 1;
-                NewItem.Information = "Super Cool Yo!";
+                NewItem.Information = "";
             }
             return Page();
         }
