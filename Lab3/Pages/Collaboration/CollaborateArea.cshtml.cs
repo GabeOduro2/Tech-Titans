@@ -3,7 +3,6 @@ using Lab3.Pages.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 
 namespace Lab3.Pages.Collaboration
@@ -17,7 +16,6 @@ namespace Lab3.Pages.Collaboration
         [BindProperty] public string? ErrorMessage { get; set; }
         [BindProperty] public string NewChatMessage { get; set; }
         public List<Chat> ChatMessages { get; set; }
-        [BindProperty] public CollabClass NewCollab { get; set; }
 
         public IActionResult OnGet()
         {
@@ -65,46 +63,30 @@ namespace Lab3.Pages.Collaboration
             }
         }
 
-        public IActionResult OnPost()
-        {
-            if (NewCollab != null && NewCollab.Name != null) // Check if NewCollab is not null before accessing its properties
-            {
-                DBClass.InsertNewCollabArea(NewCollab);
-                DBClass.Lab3DBConnection.Close();
-            }
-            return Page();
-        }
-
         public IActionResult OnPostChat()
         {
-            // Check if NewChatMessage is null or empty
-            if (string.IsNullOrEmpty(NewChatMessage))
+            if (!string.IsNullOrEmpty(NewChatMessage))
             {
-                // Set error message
-                ErrorMessage = "Message cannot be empty.";
-                return RedirectToPage(); // Redirect back to the page
+                string username = HttpContext.Session.GetString("username");
+                DateTime timestamp = DateTime.Now;
+
+                // Create a new Chat object with the submitted message, username, and timestamp
+                Chat newChat = new Chat
+                {
+                    Username = username,
+                    Message = NewChatMessage,
+                    Timestamp = timestamp
+                };
+
+                // Insert the new chat message into the database
+                DBClass.InsertChatMessage(newChat);
+
+                // Redirect back to the page
+                return RedirectToPage();
             }
 
-            string username = HttpContext.Session.GetString("username");
-            DateTime timestamp = DateTime.Now;
-
-            // Create a new Chat object with the submitted message, username, and timestamp
-            Chat newChat = new Chat
-            {
-                Username = username,
-                Message = NewChatMessage,
-                Timestamp = timestamp
-            };
-
-            // Insert the new chat message into the database
-            DBClass.InsertChatMessage(newChat);
-
-            // Redirect back to the page
-            return RedirectToPage();
+            return Page();
         }
-
-
-
 
         public IActionResult OnPostCSVFile()
         {
