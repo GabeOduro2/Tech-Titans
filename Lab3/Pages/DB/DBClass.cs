@@ -171,20 +171,21 @@ namespace Lab3.Pages.DB
 
         public static void InsertNewCollabArea(CollabClass c)
         {
-            String sqlQuery = "INSERT INTO Collaboration " +
-                "(Name, Chat) VALUES('";
-            using (SqlConnection connection = new SqlConnection("Lab3DBConnString"))
+            string sqlQuery = "INSERT INTO Collaboration (Name, Chat) VALUES (@Name, @Chats)";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
             {
-                using (SqlCommand cmd = new SqlCommand(sqlQuery, Lab3DBConnection))
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
                 {
                     cmd.Parameters.AddWithValue("@Name", c.Name);
                     cmd.Parameters.AddWithValue("@Chats", c.Chats);
 
-                    Lab3DBConnection.Open();
+                    connection.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
 
         public static void InsertNewPlan(Plan p)
         {
@@ -291,17 +292,17 @@ namespace Lab3.Pages.DB
 
         public static void InsertChatMessage(Chat chat)
         {
-            string sqlQuery = "INSERT INTO Chat (Username, Message, Timestamp) VALUES (@Username, @Message, @Timestamp)";
+            string sqlQuery = "INSERT INTO Chat (Message, Username, Timestamp) VALUES (@Message, @Username, @Timestamp)";
 
             using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
             {
                 using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
                 {
-                    cmd.Parameters.AddWithValue("@Username", chat.Username);
                     cmd.Parameters.AddWithValue("@Message", chat.Message);
+                    cmd.Parameters.AddWithValue("@Username", chat.Username);
                     cmd.Parameters.AddWithValue("@Timestamp", chat.Timestamp);
 
-                    connection.Open(); // Open the connection
+                    connection.Open();
 
                     cmd.ExecuteNonQuery();
                 }
@@ -312,7 +313,7 @@ namespace Lab3.Pages.DB
         {
             List<Chat> chatMessages = new List<Chat>();
 
-            string sqlQuery = "SELECT Username, Message, Timestamp FROM Chat";
+            string sqlQuery = "SELECT Message, Username, Timestamp FROM Chat";
 
             using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
             {
@@ -324,8 +325,8 @@ namespace Lab3.Pages.DB
 
                     while (reader.Read())
                     {
-                        string username = reader["Username"].ToString();
                         string message = reader["Message"].ToString();
+                        string username = reader["Username"].ToString();
                         DateTime timestamp = Convert.ToDateTime(reader["Timestamp"]);
 
                         Chat chat = new Chat
@@ -342,5 +343,6 @@ namespace Lab3.Pages.DB
 
             return chatMessages;
         }
+
     }
 }

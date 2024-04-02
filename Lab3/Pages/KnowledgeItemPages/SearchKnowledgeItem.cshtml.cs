@@ -136,8 +136,6 @@ namespace Lab3.Pages.KnowledgeItemPages
 
             // Pass the query to the GeneralReaderQuery method with parameters
             SqlDataReader reader = DBClass.GeneralReaderQuery(query, parameters);
-            // SqlParameter("@keyword", $"%{keyword}%"
-            //SqlDataReader reader = DBClass.GeneralReaderQuery($"SELECT * FROM KnowledgeItem WHERE Title LIKE '%{keyword}%' OR Information LIKE '%{keyword}%'");
             {
                 while (reader.Read())
                 {
@@ -195,6 +193,10 @@ namespace Lab3.Pages.KnowledgeItemPages
             KeywordSearch = null;
             SelectedUserID = 0;
             return Page();
+        }
+        public IActionResult OnPostAddKnowledge()
+        {
+            return RedirectToPage("AddKnowledgeItem");
         }
     }
 }
