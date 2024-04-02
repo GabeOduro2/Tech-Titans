@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Lab3.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Play:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -24,13 +30,13 @@
                             <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Create User</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Knowledge Items</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Documents</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Create A Plan</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Resources</a>
                         </li>
                         @{
                             if (Context.Session.GetString("username") != null)
