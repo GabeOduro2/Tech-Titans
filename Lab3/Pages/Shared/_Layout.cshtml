@@ -21,25 +21,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Create User</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/AddKnowledgeItem">Add Knowledge Item</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Search Knowledge Item</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Knowledge Items</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Create A Plan</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/DBDisplay">User Data Preview</a>
                         </li>
                         @{
                             if (Context.Session.GetString("username") != null)
