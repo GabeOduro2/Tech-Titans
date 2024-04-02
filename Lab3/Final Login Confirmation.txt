@@ -1,6 +1,0 @@
-This statement confirms that a test User has been created with the requested credentials-
-
-Username: admin
-Password: password
-
-These credentials (after being hashed) have been included in the "AUTH SQL Statements.txt" file.
