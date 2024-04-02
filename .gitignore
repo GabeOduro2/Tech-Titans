@@ -376,3 +376,5 @@ FodyWeavers.xsd
 /.vs/Tech-Titans/FileContentIndex/55a32b14-73fc-43f0-a659-485c9a25618b.vsidx
 /.vs/VSWorkspaceState.json
 /.vs/Tech-Titans/v17/.wsuo
+/.vs
+.vs/slnx.sqlite
