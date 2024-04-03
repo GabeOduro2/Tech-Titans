@@ -30,30 +30,9 @@ namespace Lab3.Pages.DB
 
             return tempReader;
         }
-        public static int LoginQuery(string loginQuery)
-        {
-            // This method expects to receive an SQL SELECT
-            // query that uses the COUNT command.
 
-            SqlCommand cmdLogin = new SqlCommand();
-            cmdLogin.Connection = Lab3DBConnection;
-            cmdLogin.Connection.ConnectionString = Lab3DBConnString;
-            cmdLogin.CommandText = loginQuery;
-            cmdLogin.Connection.Open();
-
-            // ExecuteScalar() returns back data type Object
-            // Use a typecast to convert this to an int.
-            // Method returns first column of first row.
-            int rowCount = (int)cmdLogin.ExecuteScalar();
-
-            return rowCount;
-        }
-
-        // Can run and return results for any query, if results exist.
-        // Query is passed from the invoking code.
         public static SqlDataReader GeneralReaderQuery(string sqlQuery, SqlParameter[] parameters)
         {
-
             SqlCommand cmdUserRead = new SqlCommand();
             cmdUserRead.Connection = Lab3DBConnection;
             cmdUserRead.Connection.ConnectionString = Lab3DBConnString;
@@ -106,8 +85,8 @@ namespace Lab3.Pages.DB
                     cmd.ExecuteNonQuery();
                 }
             }
-
         }
+
         public static void InsertKnowledgeItem(KnowledgeItemModel k, string category)
         {
             String sqlQuery = "INSERT INTO KnowledgeItem (UserID, Title, Category, Information) VALUES (@UserID, @Title, @Category, @Information)";
@@ -186,7 +165,6 @@ namespace Lab3.Pages.DB
             }
         }
 
-
         public static void InsertNewPlan(Plan p)
         {
             // Construct the SQL query to insert the plan's name and number of steps
@@ -213,7 +191,6 @@ namespace Lab3.Pages.DB
             }
         }
 
-        // Method to insert a step into the Step table
         private static void InsertStep(int planID, Step step)
         {
             // Construct the SQL query to insert a step into the Step table
