@@ -26,24 +26,24 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Create User</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Documents</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Resources</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/FileHandling">Repository</a>
-                        </li>
                         @{
                             if (Context.Session.GetString("username") != null)
                             {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Create User</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Documents</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Resources</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/FileHandling">Repository</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-page="/SecureLoginLanding">@Context.Session.GetString("username")</a>
                                 </li>
@@ -70,7 +70,7 @@
         <div class="container">
             &copy; 2024 - Madison County
         </div>
-    </footer>
+    </footer>d
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
