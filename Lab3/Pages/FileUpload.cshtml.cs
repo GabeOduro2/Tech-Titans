@@ -21,7 +21,7 @@ namespace Lab3.Pages
             // https://code-maze.com/file-upload-aspnetcore-mvc/
         }
 
-        public async Task OnPostAsync(IFormFile fileUpload)
+        public async Task<IActionResult> OnPostAsync(IFormFile fileUpload)
         {
             var filePath = Path.Combine("wwwroot", "fileupload", fileUpload.FileName);
 
@@ -31,6 +31,8 @@ namespace Lab3.Pages
             }
 
             await ProcessCsvAsync(filePath);
+            return RedirectToPage("/FileHandling");
+
         }
         private async Task ProcessCsvAsync(string filePath)
         {
