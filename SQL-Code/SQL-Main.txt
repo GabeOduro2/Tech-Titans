@@ -6,7 +6,7 @@ CREATE TABLE [User](
 	UserID int IDENTITY(1,1) PRIMARY KEY,
 	Username NVARCHAR(25),
 	FirstName NVARCHAR(15),
-	LastName NVARCHAR(15),
+	LastName NVARCHAR(30),
 	Email NVARCHAR(40),
 	Phone BIGINT,
 	Address NVARCHAR(100),
@@ -22,8 +22,8 @@ CREATE TABLE UserData(
 
 CREATE TABLE KnowledgeItem(
 	KnowledgeID int IDENTITY(1,1) PRIMARY KEY,
-	Title NVARCHAR(50),
-	Category NVARCHAR(20),
+	Title NVARCHAR(200),
+	Category NVARCHAR(50),
 	Information NVARCHAR(300),
 	UserID int,
 	FOREIGN KEY (UserID) REFERENCES [User](UserID)
@@ -31,7 +31,7 @@ CREATE TABLE KnowledgeItem(
 
 CREATE TABLE [Plan](
 	PlanID int IDENTITY(1,1) PRIMARY KEY,
-	Name NVARCHAR(25),
+	Name NVARCHAR(150),
 	NumSteps int
 );
 
@@ -46,7 +46,7 @@ CREATE TABLE Step(
 
 CREATE TABLE Collaboration(
 	CollabID int IDENTITY(1,1) PRIMARY KEY,
-	Name NVARCHAR(50),
+	Name NVARCHAR(100),
 	Chat NVARCHAR(1000),
 	UserID int FOREIGN KEY REFERENCES [User](UserID),
 	KnowledgeID int	FOREIGN KEY REFERENCES KnowledgeItem(KnowledgeID),
@@ -75,122 +75,28 @@ INSERT INTO UserData (Date, UserID) VALUES (GETDATE(), 2);
 
 -- Insert into KnowledgeItem table
 INSERT INTO KnowledgeItem (Title, Category, Information, UserID) 
-VALUES ('How to Bake a Cake', 'Cooking', 'Step-by-step guide on baking a delicious cake.', 1);
+VALUES ('Best Practices for Improving County Government Administrative Efficiency', 'Administrative Review', 'Step 1: Assess your strengths and weaknesses', 1);
 
 INSERT INTO KnowledgeItem (Title, Category, Information, UserID) 
-VALUES ('Introduction to SQL', 'Programming', 'Basic SQL commands and syntax.', 2);
+VALUES ('Best Practices for Managing County Governmnet Personnel', 'Administrative Review', 'Identifying management practices for legal compliance and employee satisfaction', 2);
 
 -- Insert into [Plan] table
 INSERT INTO [Plan] (Name, NumSteps) 
-VALUES ('Fitness Plan', 5);
+VALUES ('Citizen Engagement Plan', 5);
 
 INSERT INTO [Plan] (Name, NumSteps) 
-VALUES ('Study Schedule', 10);
+VALUES ('Economic Development Strategy for 2024', 10);
 
 -- Insert into Step table
 INSERT INTO Step (Name, Priority, Information, PlanID) 
-VALUES ('Warm-up', 1, '5 minutes of stretching', 1);
+VALUES ('Engage Citizens', 1, 'Initiate citizen engagement activities', 1);
 
 INSERT INTO Step (Name, Priority, Information, PlanID) 
-VALUES ('Chapter 1: Overview', 1, 'Read and summarize Chapter 1', 2);
+VALUES ('Economic Analysis', 1, 'Conduct an economic analysis for 2024', 2);
 
 -- Insert into Collaboration table
 INSERT INTO Collaboration (Name, Chat, UserID, KnowledgeID, PlanID) 
-VALUES ('Project Team', 'Discussion about project progress', 1, 1, 1);
+VALUES ('Spending levels and projections', '2024 Analysis:', 1, 1, 1);
 
 INSERT INTO Collaboration (Name, Chat, UserID, KnowledgeID, PlanID) 
-VALUES ('Study Group', 'Sharing study materials and resources', 2, 2, 2);
-
--- 1-2 Database Tables with test data:
-
--- Create CityPopulation table
-CREATE TABLE CityPopulation (
-    City NVARCHAR(50),
-    Population INT,
-    [Average Number of Pets] FLOAT
-);
-
--- Insert data into CityPopulation table
-INSERT INTO CityPopulation (City, Population, [Average Number of Pets])
-VALUES 
-('Arlington', 236842, 0.8),
-('Richmond', 227032, 0.6),
-('Virginia Beach', 450435, 0.7),
-('Norfolk', 242742, 0.9),
-('Chesapeake', 244835, 0.6),
-('Newport News', 179225, 0.5),
-('Alexandria', 159428, 0.7),
-('Hampton', 133793, 0.8),
-('Roanoke', 99837, 0.6),
-('Portsmouth', 96201, 0.7),
-('Suffolk', 92108, 0.5),
-('Lynchburg', 82168, 0.4),
-('Harrisonburg', 54049, 0.5),
-('Charlottesville', 46597, 0.6),
-('Danville', 41573, 0.4),
-('Manassas', 41276, 0.7),
-('Petersburg', 31350, 0.4),
-('Fredericksburg', 29036, 0.6),
-('Winchester', 28078, 0.5),
-('Salem', 25974, 0.6);
-
--- Create Average Height by State table
-CREATE TABLE StateHeight (
-    State NVARCHAR(50),
-    Feet INT,
-    Inches INT
-);
-
--- Insert data into the StateHeight table
-INSERT INTO StateHeight (State, Feet, Inches)
-VALUES 
-('Alabama', 5, 9),
-('Alaska', 5, 10),
-('Arizona', 5, 8),
-('Arkansas', 5, 7),
-('California', 5, 10),
-('Colorado', 5, 11),
-('Connecticut', 5, 9),
-('Delaware', 5, 8),
-('Florida', 5, 7),
-('Georgia', 5, 11),
-('Hawaii', 5, 8),
-('Idaho', 5, 10),
-('Illinois', 5, 9),
-('Indiana', 5, 8),
-('Iowa', 5, 7),
-('Kansas', 5, 10),
-('Kentucky', 5, 9),
-('Louisiana', 5, 8),
-('Maine', 5, 7),
-('Maryland', 5, 11),
-('Massachusetts', 5, 9),
-('Michigan', 5, 10),
-('Minnesota', 5, 11),
-('Mississippi', 5, 8),
-('Missouri', 5, 9),
-('Montana', 5, 10),
-('Nebraska', 5, 8),
-('Nevada', 5, 9),
-('New Hampshire', 5, 7),
-('New Jersey', 5, 11),
-('New Mexico', 5, 8),
-('New York', 5, 10),
-('North Carolina', 5, 9),
-('North Dakota', 5, 7),
-('Ohio', 5, 10),
-('Oklahoma', 5, 8),
-('Oregon', 5, 9),
-('Pennsylvania', 5, 11),
-('Rhode Island', 5, 8),
-('South Carolina', 5, 10),
-('South Dakota', 5, 9),
-('Tennessee', 5, 8),
-('Texas', 5, 11),
-('Utah', 5, 10),
-('Vermont', 5, 9),
-('Virginia', 5, 8),
-('Washington', 5, 11),
-('West Virginia', 5, 8),
-('Wisconsin', 5, 10),
-('Wyoming', 5, 9);
+VALUES ('Tax base assessment and projected revenue', '2024 Analysis:', 2, 2, 2);
