@@ -2,6 +2,7 @@ using Lab3.Pages.DataClasses;
 using Lab3.Pages.DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data.SqlClient;
 
 namespace Lab3.Pages
@@ -10,6 +11,17 @@ namespace Lab3.Pages
     {
         [BindProperty]
         public User NewUser { get; set; }
+        [BindProperty]
+        public List<SelectListItem> SelectedUserType { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "Admin", Text = "Administrator" },
+            new SelectListItem { Value = "Administrative Efficiency Review", Text = "Administrative Efficiency Review" },
+            new SelectListItem { Value = "Administrative Review", Text = "Administrative Efficiency Review" },
+            new SelectListItem { Value = "Personal Policy and Administration", Text = "Personal Policy and Administration" },
+            new SelectListItem { Value = "Economic Development", Text = "Economic Development" },
+            new SelectListItem { Value = "Citizen Communication", Text = "Citizen Communications" },
+        };
+
         public string? CreateMessage { get; set; }
 
         public IActionResult OnGet()
