@@ -1,20 +1,21 @@
 ﻿@page
 @using System.IO
-@model InventoryManagement.Pages.Practice.FileHandlingModel
+@model Lab3.Pages.FileHandlingModel
 @{
 }
 
 @{
-    string imagesDir = Directory.GetCurrentDirectory();
-    imagesDir += @"\wwwroot\fileupload\";
-    <p>@imagesDir</p>
+    string uploadsDir = Directory.GetCurrentDirectory(); //Finds and sets current projects current directory
+    uploadsDir += @"\wwwroot\fileupload\"; // Adds target location to read files from
+    <p>@uploadsDir</p>
     <br />
-    DirectoryInfo imagesFolder = new DirectoryInfo(imagesDir);
+    DirectoryInfo uploadsFolder = new DirectoryInfo(uploadsDir);
 
-    var fileListing = imagesFolder.GetFiles();
+    var fileListing = uploadsFolder.GetFiles();
 
     foreach (var file in fileListing)
     {
-        <a href="/fileupload/@file.Name" target="_blank">@file.Name</a><br />
+        <a href="/fileupload/@file.Name" target="_blank">@file.Name</a>
+        <br />
     }
 }

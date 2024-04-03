@@ -18,17 +18,3 @@
     
     <button type="submit" class="btn btn-primary" asp-page-handler="Save">Save Plan</button>
 </form>
-
-    @* Add Steps After Creating Plan!
-        <div>
-        <label asp-for="NewPlan.Steps">Add Steps:</label>
-        <div id="stepContainer">
-            <!-- Initial input field -->
-            @for (int i = 0; i < Model.NumSteps + 1; i++)
-            {
-                <input asp-for="NewPlan.Steps[i]" />
-            }
-        </div>
-        <!-- Button to add more input fields -->
-        <button type="submit" name="addStepBtn" value="addStep">Add Step -></button>
-    </div> *@
