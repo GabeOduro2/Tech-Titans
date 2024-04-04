@@ -60,6 +60,34 @@ CREATE TABLE Chat (
 	Timestamp DATETIME DEFAULT GETDATE()
 );
 
+CREATE TABLE BudgetChat (
+	Chat_ID INT PRIMARY KEY IDENTITY,
+	Message TEXT,
+	Username VARCHAR(255),
+	Timestamp DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE EcoDevChat (
+	Chat_ID INT PRIMARY KEY IDENTITY,
+	Message TEXT,
+	Username VARCHAR(255),
+	Timestamp DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE CitizenChat (
+	Chat_ID INT PRIMARY KEY IDENTITY,
+	Message TEXT,
+	Username VARCHAR(255),
+	Timestamp DATETIME DEFAULT GETDATE()
+)
+
+CREATE TABLE PolicyChat (
+	Chat_ID INT PRIMARY KEY IDENTITY,
+	Message TEXT,
+	Username VARCHAR(255),
+	Timestamp DATETIME DEFAULT GETDATE()
+)
+
 -- Insert Statements:
 
 -- Insert into [User] table
