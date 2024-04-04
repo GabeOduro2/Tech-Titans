@@ -135,9 +135,63 @@ namespace Lab3.Pages.DB
                 }
             }
         }
+        //Methods for getting admin eff review chat
         public static SqlDataReader GetMessages()
         {
             string sqlQuery = "SELECT * FROM Chat";
+
+            SqlCommand cmdGetMessages = new SqlCommand(sqlQuery, Lab3DBConnection);
+
+            Lab3DBConnection.Open();
+
+            SqlDataReader tempReader = cmdGetMessages.ExecuteReader();
+
+            return tempReader;
+        }
+
+        public static SqlDataReader GetBudgetMessages()
+        {
+            string sqlQuery = "SELECT * FROM BudgetChat";
+
+            SqlCommand cmdGetMessages = new SqlCommand(sqlQuery, Lab3DBConnection);
+
+            Lab3DBConnection.Open();
+
+            SqlDataReader tempReader = cmdGetMessages.ExecuteReader();
+
+            return tempReader;
+        }
+
+        //Method for getting citizen communication chat messages
+        public static SqlDataReader GetCitizenMessages()
+        {
+            string sqlQuery = "SELECT * FROM CitizenChat";
+
+            SqlCommand cmdGetMessages = new SqlCommand(sqlQuery, Lab3DBConnection);
+
+            Lab3DBConnection.Open();
+
+            SqlDataReader tempReader = cmdGetMessages.ExecuteReader();
+
+            return tempReader;
+        }
+
+        public static SqlDataReader GetEcoDevMessages()
+        {
+            string sqlQuery = "SELECT * FROM EcoDevChat";
+
+            SqlCommand cmdGetMessages = new SqlCommand(sqlQuery, Lab3DBConnection);
+
+            Lab3DBConnection.Open();
+
+            SqlDataReader tempReader = cmdGetMessages.ExecuteReader();
+
+            return tempReader;
+        }
+
+        public static SqlDataReader GetPolicyMessages()
+        {
+            string sqlQuery = "SELECT * FROM PolicyChat";
 
             SqlCommand cmdGetMessages = new SqlCommand(sqlQuery, Lab3DBConnection);
 
@@ -267,6 +321,7 @@ namespace Lab3.Pages.DB
             cmdLogin.ExecuteNonQuery();
         }
 
+        //Methods for inserting chats into each individual chat
         public static void InsertChatMessage(Chat chat)
         {
             string sqlQuery = "INSERT INTO Chat (Message, Username, Timestamp) VALUES (@Message, @Username, @Timestamp)";
@@ -286,11 +341,231 @@ namespace Lab3.Pages.DB
             }
         }
 
+        public static void InsertBudgetChatMessage(Chat chat)
+        {
+            string sqlQuery = "INSERT INTO BudgetChat (Message, Username, Timestamp) VALUES (@Message, @Username, @Timestamp)";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Message", chat.Message);
+                    cmd.Parameters.AddWithValue("@Username", chat.Username);
+                    cmd.Parameters.AddWithValue("@Timestamp", chat.Timestamp);
+
+                    connection.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void InsertCitizenChatMessage(Chat chat)
+        {
+            string sqlQuery = "INSERT INTO CitizenChat (Message, Username, Timestamp) VALUES (@Message, @Username, @Timestamp)";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Message", chat.Message);
+                    cmd.Parameters.AddWithValue("@Username", chat.Username);
+                    cmd.Parameters.AddWithValue("@Timestamp", chat.Timestamp);
+
+                    connection.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void InsertEcoDevChatMessage(Chat chat)
+        {
+            string sqlQuery = "INSERT INTO EcoDevChat (Message, Username, Timestamp) VALUES (@Message, @Username, @Timestamp)";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Message", chat.Message);
+                    cmd.Parameters.AddWithValue("@Username", chat.Username);
+                    cmd.Parameters.AddWithValue("@Timestamp", chat.Timestamp);
+
+                    connection.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void InsertPolicyChatMessage(Chat chat)
+        {
+            string sqlQuery = "INSERT INTO PolicyChat (Message, Username, Timestamp) VALUES (@Message, @Username, @Timestamp)";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    cmd.Parameters.AddWithValue("@Message", chat.Message);
+                    cmd.Parameters.AddWithValue("@Username", chat.Username);
+                    cmd.Parameters.AddWithValue("@Timestamp", chat.Timestamp);
+
+                    connection.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        //Methods for displaying chat messages in each functional area
         public static List<Chat> GetChatMessages()
         {
             List<Chat> chatMessages = new List<Chat>();
 
             string sqlQuery = "SELECT Message, Username, Timestamp FROM Chat";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    connection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string message = reader["Message"].ToString();
+                        string username = reader["Username"].ToString();
+                        DateTime timestamp = Convert.ToDateTime(reader["Timestamp"]);
+
+                        Chat chat = new Chat
+                        {
+                            Username = username,
+                            Message = message,
+                            Timestamp = timestamp
+                        };
+
+                        chatMessages.Add(chat);
+                    }
+                }
+            }
+
+            return chatMessages;
+        }
+
+        //Budget chat retrieval
+        public static List<Chat> GetBudgetChatMessages()
+        {
+            List<Chat> chatMessages = new List<Chat>();
+
+            string sqlQuery = "SELECT Message, Username, Timestamp FROM BudgetChat";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    connection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string message = reader["Message"].ToString();
+                        string username = reader["Username"].ToString();
+                        DateTime timestamp = Convert.ToDateTime(reader["Timestamp"]);
+
+                        Chat chat = new Chat
+                        {
+                            Username = username,
+                            Message = message,
+                            Timestamp = timestamp
+                        };
+
+                        chatMessages.Add(chat);
+                    }
+                }
+            }
+
+            return chatMessages;
+        }
+
+        //Citizen chat retrieval
+        public static List<Chat> GetCitizenChatMessages()
+        {
+            List<Chat> chatMessages = new List<Chat>();
+
+            string sqlQuery = "SELECT Message, Username, Timestamp FROM CitizenChat";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    connection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string message = reader["Message"].ToString();
+                        string username = reader["Username"].ToString();
+                        DateTime timestamp = Convert.ToDateTime(reader["Timestamp"]);
+
+                        Chat chat = new Chat
+                        {
+                            Username = username,
+                            Message = message,
+                            Timestamp = timestamp
+                        };
+
+                        chatMessages.Add(chat);
+                    }
+                }
+            }
+
+            return chatMessages;
+        }
+
+        //Eco dev chat retrieval
+        public static List<Chat> GetEcoDevChatMessages()
+        {
+            List<Chat> chatMessages = new List<Chat>();
+
+            string sqlQuery = "SELECT Message, Username, Timestamp FROM EcoDevChat";
+
+            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
+            {
+                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
+                {
+                    connection.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string message = reader["Message"].ToString();
+                        string username = reader["Username"].ToString();
+                        DateTime timestamp = Convert.ToDateTime(reader["Timestamp"]);
+
+                        Chat chat = new Chat
+                        {
+                            Username = username,
+                            Message = message,
+                            Timestamp = timestamp
+                        };
+
+                        chatMessages.Add(chat);
+                    }
+                }
+            }
+
+            return chatMessages;
+        }
+
+        public static List<Chat> GetPolicyChatMessages()
+        {
+            List<Chat> chatMessages = new List<Chat>();
+
+            string sqlQuery = "SELECT Message, Username, Timestamp FROM PolicyChat";
 
             using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
             {
