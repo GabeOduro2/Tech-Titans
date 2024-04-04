@@ -16,7 +16,7 @@ namespace Lab3.Pages
         {
             new SelectListItem { Value = "Admin", Text = "Administrator" },
             new SelectListItem { Value = "Administrative Efficiency Review", Text = "Administrative Efficiency Review" },
-            new SelectListItem { Value = "Administrative Review", Text = "Administrative Efficiency Review" },
+            new SelectListItem { Value = "Administrative Review", Text = "Administrative Review" },
             new SelectListItem { Value = "Personal Policy and Administration", Text = "Personal Policy and Administration" },
             new SelectListItem { Value = "Economic Development", Text = "Economic Development" },
             new SelectListItem { Value = "Citizen Communication", Text = "Citizen Communications" },

@@ -27,7 +27,8 @@
 
         // Let the user try login again.
         <form asp-page="DBLogin">
-        <input asp-for="Username" class="form-control" placeholder="Enter Username" />
+        <label>Enter Username:</label>
+        <input asp-for="Username" class="form-control" />
         <br />
         <label>Enter Password:</label>
         <input asp-for="Password" class="form-control" type="password" />
@@ -42,7 +43,8 @@
         // First time loading the page
 
         <form asp-page="DBLogin">
-        <input asp-for="Username" class="form-control" placeholder="Enter Username" />
+            <label>Enter Username:</label>
+        <input asp-for="Username" class="form-control" />
         <br />
         <label>Enter Password:</label>
         <input asp-for="Password" class="form-control" type="password" />

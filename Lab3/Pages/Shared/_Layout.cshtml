@@ -30,19 +30,34 @@
                             if (Context.Session.GetString("username") != null)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Create User</a>
+                                    <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Sign Up</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Documents</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
-                                </li>
+                                // <li class="nav-item">
+                                //     <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Documents</a>
+                                // </li>
+                                // <li class="nav-item">
+                                //     <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
+                                // </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Resources</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/FileHandling">Repository</a>
+                                    <a class="nav-link text-light" asp-area="" asp-page="/FileHandling">Files</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/Budget">Budget</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CitizenComm">Citizen Communication</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/EcoDev">Economic Development</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/PersonalPolicy">Personal Policy</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/AdminEffReview">Admin Efficiency Review</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-page="/SecureLoginLanding">@Context.Session.GetString("username")</a>
@@ -70,7 +85,7 @@
         <div class="container">
             &copy; 2024 - Madison County
         </div>
-    </footer>d
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
