@@ -10,7 +10,7 @@ CREATE TABLE [User](
 	Email NVARCHAR(40),
 	Phone BIGINT,
 	Address NVARCHAR(100),
-	UserType NVARCHAR(25)
+	UserType NVARCHAR(50)
 );
 
 CREATE TABLE UserData(
