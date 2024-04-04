@@ -1,34 +1,20 @@
 ﻿@page
 @model CreatePlanModel
 @{
-    ViewData["Title"] = "Create Plan";
+    ViewData["Title"] = "Create Resource";
 }
 
 <form method="post">
-    <h1>Create a New Plan</h1>
+    <h1>Create a New Resource</h1>
     <div>
-        <label asp-for="NewPlan.Name">Enter Plan's Title:</label>
-        <input asp-for="NewPlan.Name" placeholder="Plan Name:" />
+        <label asp-for="NewPlan.Name">Enter Documents's Title:</label>
+        <input asp-for="NewPlan.Name"/>
         <span asp-validation-for="NewPlan.Name" class="text-danger"></span>
     </div>
-    Share Plan with others:
+    Select users to share resource with:
     <select asp-for="SelectedUsers" asp-items="Model.Users" multiple class="form-select">
-        <option value="" disabled>Select Users Below to Share Plan With Them -> </option>
+        
     </select>
-    <br />
+    
     <button type="submit" class="btn btn-primary" asp-page-handler="Save">Save Plan</button>
 </form>
-
-    @* Add Steps After Creating Plan!
-        <div>
-        <label asp-for="NewPlan.Steps">Add Steps:</label>
-        <div id="stepContainer">
-            <!-- Initial input field -->
-            @for (int i = 0; i < Model.NumSteps + 1; i++)
-            {
-                <input asp-for="NewPlan.Steps[i]" />
-            }
-        </div>
-        <!-- Button to add more input fields -->
-        <button type="submit" name="addStepBtn" value="addStep">Add Step -></button>
-    </div> *@

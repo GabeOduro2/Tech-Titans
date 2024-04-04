@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Lab3.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Play:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -20,30 +26,39 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Create User</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/AddKnowledgeItem">Add Knowledge Item</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Search Knowledge Item</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Create A Plan</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/DBDisplay">User Data Preview</a>
-                        </li>
                         @{
                             if (Context.Session.GetString("username") != null)
                             {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Sign Up</a>
+                                </li>
+                                // <li class="nav-item">
+                                //     <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Documents</a>
+                                // </li>
+                                // <li class="nav-item">
+                                //     <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
+                                // </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Resources</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/FileHandling">Files</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/Budget">Budget</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CitizenComm">Citizen Communication</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/EcoDev">Economic Development</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/PersonalPolicy">Personal Policy</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/AdminEffReview">Admin Efficiency Review</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-page="/SecureLoginLanding">@Context.Session.GetString("username")</a>
                                 </li>
@@ -65,13 +80,10 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-        @* <aside>
-
-        </aside> *@
     </div>
     <footer class="border-top footer text-primary" >
         <div class="container">
-            &copy; 2024 - Lab3 -<a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - Madison County
         </div>
     </footer>
 

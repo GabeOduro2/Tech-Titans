@@ -1,0 +1,20 @@
+﻿@page
+@model Lab3.Pages.Collaboration.EcoDevModel
+@{
+}
+
+<aside>
+    <h1>Chat</h1>
+    <form method="post">
+        <input type="text" asp-for="NewChatMessage" placeholder="Type Message Here..." />
+        <button type="submit" asp-page-handler="Chat">Send</button>
+    </form>
+    <div class="chat-messages">
+        @foreach (var message in Model.ChatMessages)
+        {
+            <div class="message">
+                <strong>@message.Username:</strong> @message.Message - @message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")
+            </div>
+        }
+    </div>
+</aside>
