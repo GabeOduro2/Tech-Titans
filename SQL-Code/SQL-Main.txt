@@ -64,7 +64,7 @@ CREATE TABLE Chat (
 
 -- Insert into [User] table
 INSERT INTO [User] (Username, FirstName, LastName, Email, Phone, Address, UserType) 
-VALUES ('john_doe', 'John', 'Doe', 'john.doe@example.com', 1234567890, '123 Main St', 'Regular');
+VALUES ('john_doe', 'John', 'Doe', 'john.doe@example.com', 1234567890, '123 Main St', 'Finance');
 
 INSERT INTO [User] (Username, FirstName, LastName, Email, Phone, Address, UserType) 
 VALUES ('admin','Jane', 'Smith', 'jane.smith@example.com', 9876543210, '456 Elm St', 'Admin');
