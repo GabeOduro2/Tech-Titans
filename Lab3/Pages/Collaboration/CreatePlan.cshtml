@@ -4,13 +4,4 @@
     ViewData["Title"] = "Create Resource";
 }
 
-<form method="post">
-    <h1>Create a New Resource</h1>
-    <div>
-        <label asp-for="NewPlan.Name">Enter Resource Title:</label>
-        <input asp-for="NewPlan.Name"/>
-        <span asp-validation-for="NewPlan.Name" class="text-danger"></span>
-    </div>
-    
-    <button type="submit" class="btn btn-primary" asp-page-handler="Save">Save</button>
-</form>
+
