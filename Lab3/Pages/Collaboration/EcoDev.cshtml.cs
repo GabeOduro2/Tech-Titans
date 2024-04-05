@@ -1,7 +1,12 @@
-using Lab3.Pages.DataClasses;
-using Lab3.Pages.DB;
+using System;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Lab3.Pages.DataClasses;
+using Lab3.Pages.DB;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data.SqlClient;
 
 namespace Lab3.Pages.Collaboration
 {
@@ -48,6 +53,23 @@ namespace Lab3.Pages.Collaboration
                 DBClass.InsertEcoDevChatMessage(newChat);
 
                 // Redirect back to the page
+                return RedirectToPage();
+            }
+
+            return Page();
+        }
+
+        public IActionResult OnPostUpload(IFormFile EcoDevfiles)
+        {
+            if (EcoDevfiles != null && EcoDevfiles.Length > 0)
+            {
+                string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "EcoDevFiles");
+                string filePath = Path.Combine(uploadsDir, EcoDevfiles.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    EcoDevfiles.CopyTo(fileStream);
+                }
+
                 return RedirectToPage();
             }
 

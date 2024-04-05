@@ -5,17 +5,62 @@
 }
 
 @{
-    string uploadsDir = Directory.GetCurrentDirectory(); //Finds and sets current projects current directory
-    uploadsDir += @"\wwwroot\fileupload\"; // Adds target location to read files from
-    // <p>@uploadsDir</p>
-    <br />
+    string uploadsDir = Directory.GetCurrentDirectory(); 
+    uploadsDir += @"\wwwroot\fileupload\"; 
     DirectoryInfo uploadsFolder = new DirectoryInfo(uploadsDir);
-
     var fileListing = uploadsFolder.GetFiles();
-
-    foreach (var file in fileListing)
-    {
-        <a href="/fileupload/@file.Name" target="_blank">@file.Name</a>
-        <br />
-    }
 }
+
+<h3>File Upload</h3>
+<form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+    <input type="file" name="fileupload" />
+    <input type="submit" value="Upload" />
+</form>
+<br />
+
+<h3>File Repository</h3>
+<table>
+    <tr>
+        <th>File Name</th>
+        <th>Uploaded Date and Time</th>
+    </tr>
+    @foreach (var file in fileListing)
+    {
+        <tr>
+            <td><a href="/fileupload/@file.Name" target="_blank">@file.Name</a></td>
+            <td>@file.LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+        </tr>
+    }
+</table>
+<br />
+
+<style>
+    .chat-output {
+        width: 100%;
+        height: 200px;
+        overflow-y: scroll;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: white;
+    }
+
+    th {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+
+    td {
+        color: black;
+        padding: 8px;
+        text-align: left;
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: #000000;
+    }
+</style>

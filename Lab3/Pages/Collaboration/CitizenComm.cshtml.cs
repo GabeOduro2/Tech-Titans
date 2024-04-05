@@ -53,5 +53,22 @@ namespace Lab3.Pages.Collaboration
 
             return Page();
         }
+
+        public IActionResult OnPostUpload(IFormFile CitizenFiles)
+        {
+            if (CitizenFiles != null && CitizenFiles.Length > 0)
+            {
+                string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CitizenFiles");
+                string filePath = Path.Combine(uploadsDir, CitizenFiles.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    CitizenFiles.CopyTo(fileStream);
+                }
+
+                return RedirectToPage();
+            }
+
+            return Page();
+        }
     }
 }

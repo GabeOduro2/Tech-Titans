@@ -53,5 +53,22 @@ namespace Lab3.Pages.Collaboration
 
             return Page();
         }
+
+        public IActionResult OnPostUpload(IFormFile PolicyFiles)
+        {
+            if (PolicyFiles != null && PolicyFiles.Length > 0)
+            {
+                string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "PolicyFiles");
+                string filePath = Path.Combine(uploadsDir, PolicyFiles.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    PolicyFiles.CopyTo(fileStream);
+                }
+
+                return RedirectToPage();
+            }
+
+            return Page();
+        }
     }
 }

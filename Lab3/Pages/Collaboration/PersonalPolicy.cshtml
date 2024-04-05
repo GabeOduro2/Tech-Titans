@@ -1,20 +1,81 @@
 ﻿@page
 @model Lab3.Pages.Collaboration.PersonalPolicyModel
 @{
+    string uploadsDir = Directory.GetCurrentDirectory();
+    uploadsDir += @"\wwwroot\PolicyFiles\";
+    DirectoryInfo uploadsFolder = new DirectoryInfo(uploadsDir);
+    var fileListing = uploadsFolder.GetFiles();
 }
 
+<h3>File Upload</h3>
+<form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+    <input type="file" name="PolicyFiles" />
+    <input type="submit" value="Upload" />
+</form>
+<br />
+
+<h3>File Repository</h3>
+<table>
+    <tr>
+        <th>File Name</th>
+        <th>Uploaded Date and Time</th>
+    </tr>
+    @foreach (var file in fileListing)
+    {
+        <tr>
+            <td><a href="/fileupload/@file.Name" target="_blank">@file.Name</a></td>
+            <td>@file.LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+        </tr>
+    }
+</table>
+<br />
+
 <aside>
-    <h1>Chat</h1>
+    <h3>Chat</h3>
+    <div class="chat-messages">
+        <textarea class="chat-output" readonly>
+            @foreach (var message in Model.ChatMessages)
+            {
+                @($"{message.Username}: {message.Message} - {message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")}\n")
+            }
+        </textarea>
+    </div>
     <form method="post">
         <input type="text" asp-for="NewChatMessage" placeholder="Type Message Here..." />
         <button type="submit" asp-page-handler="Chat">Send</button>
     </form>
-    <div class="chat-messages">
-        @foreach (var message in Model.ChatMessages)
-        {
-            <div class="message">
-                <strong>@message.Username:</strong> @message.Message - @message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")
-            </div>
-        }
-    </div>
 </aside>
+
+<style>
+    .chat-output {
+        width: 100%;
+        height: 200px; 
+        overflow-y: scroll;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: white;
+    }
+
+    th {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+
+    td {
+        color: black;
+        padding: 8px;
+        text-align: left;
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: #000000;
+    }
+</style>
+
+
+
