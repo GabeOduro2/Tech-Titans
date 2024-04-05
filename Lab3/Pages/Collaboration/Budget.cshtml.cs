@@ -8,17 +8,20 @@ namespace Lab3.Pages.Collaboration
     public class BudgetModel : PageModel
     {
         [BindProperty] public string? ErrorMessage { get; set; }
-        [BindProperty] public string NewChatMessage { get; set; }
+        [BindProperty] public string? NewChatMessage { get; set; }
         public List<Chat> ChatMessages { get; set; }
+
+        public BudgetModel()
+        {
+            // Retrieve chat messages from the database
+            ChatMessages = DBClass.GetBudgetChatMessages();
+            DBClass.Lab3DBConnection.Close();
+        }
+
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("username") != null)
             {
-                // Retrieve chat messages from the database
-                ChatMessages = DBClass.GetBudgetChatMessages();
-
-                DBClass.Lab3DBConnection.Close();
-
                 return Page();
             }
             else
