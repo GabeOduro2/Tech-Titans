@@ -1,0 +1,73 @@
+﻿@page
+@model CreatePlanModel
+@{
+    ViewData["Title"] = "Create Resource";
+}
+
+@{
+    string uploadsDir = Directory.GetCurrentDirectory();
+    uploadsDir += @"\wwwroot\ResourceFiles\";
+    DirectoryInfo uploadsFolder = new DirectoryInfo(uploadsDir);
+    var fileListing = uploadsFolder.GetFiles();
+}
+<h1>Resources</h1>
+<br />
+<h3>File Upload</h3>
+<form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+    <input type="file" name="ResourceFiles" />
+    <input type="submit" value="Upload" />
+</form>
+<br />
+
+<h3>File Repository</h3>
+<table>
+    <tr>
+        <th>File Name</th>
+        <th>Uploaded Date and Time</th>
+        <th>Edit</th>
+    </tr>
+    @foreach (var file in fileListing)
+    {
+        <tr>
+            <td><a href="/fileupload/@file.Name" target="_blank">@file.Name</a></td>
+            <td>@file.LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            <td>
+                <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to delete this file?');">
+                    <input type="hidden" name="fileName" value="@file.Name" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<style>
+    .chat-output {
+        width: 100%;
+        height: 200px;
+        overflow-y: scroll;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: white;
+    }
+
+    th {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+
+    td {
+        color: black;
+        padding: 8px;
+        text-align: left;
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: #000000;
+    }
+</style>

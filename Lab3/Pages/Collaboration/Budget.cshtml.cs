@@ -13,7 +13,6 @@ namespace Lab3.Pages.Collaboration
 
         public BudgetModel()
         {
-            // Retrieve chat messages from the database
             ChatMessages = DBClass.GetBudgetChatMessages();
             DBClass.Lab3DBConnection.Close();
         }
@@ -26,7 +25,6 @@ namespace Lab3.Pages.Collaboration
             }
             else
             {
-                // Redirect to login page if user not logged in
                 HttpContext.Session.SetString("LoginError", "You must login to access that page!");
                 return RedirectToPage("/DBLogin");
             }
@@ -39,7 +37,6 @@ namespace Lab3.Pages.Collaboration
                 string username = HttpContext.Session.GetString("username");
                 DateTime timestamp = DateTime.Now;
 
-                // Create a new Chat object with the submitted message, username, and timestamp
                 Chat newChat = new Chat
                 {
                     Username = username,
@@ -47,10 +44,8 @@ namespace Lab3.Pages.Collaboration
                     Timestamp = timestamp
                 };
 
-                // Insert the new chat message into the database
                 DBClass.InsertBudgetChatMessage(newChat);
 
-                // Redirect back to the page
                 return RedirectToPage();
             }
 
