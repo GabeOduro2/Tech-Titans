@@ -60,16 +60,16 @@ namespace Lab3.Pages.Collaboration
             return Page();
         }
 
-        public IActionResult OnPostUpload(IFormFile adminReviewFile)
+        public IActionResult OnPostUpload(IFormFile AdminReviewFiles)
         {
-            if (adminReviewFile != null && adminReviewFile.Length > 0)
+            if (AdminReviewFiles != null && AdminReviewFiles.Length > 0)
             {
                 // Save the uploaded file to the server
                 string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "AdminReviewFiles");
-                string filePath = Path.Combine(uploadsDir, adminReviewFile.FileName);
+                string filePath = Path.Combine(uploadsDir, AdminReviewFiles.FileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    adminReviewFile.CopyTo(fileStream);
+                    AdminReviewFiles.CopyTo(fileStream);
                 }
 
                 // Optionally, you can add code here to save information about the uploaded file to the database or perform other operations.
