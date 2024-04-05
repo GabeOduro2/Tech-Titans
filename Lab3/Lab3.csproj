@@ -22,7 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\fileuploadEcoDev\" />
+    <Folder Include="wwwroot\fileuploadPersonalPolicy\" />
+    <Folder Include="wwwroot\fileuploadCitizenComm\" />
+    <Folder Include="wwwroot\fileuploadBudget\" />
     <Folder Include="wwwroot\fileupload\" />
+    <Folder Include="wwwroot\fileuploadAdminEffReview\" />
   </ItemGroup>
 
 </Project>
