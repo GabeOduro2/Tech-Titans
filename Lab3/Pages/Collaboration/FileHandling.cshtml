@@ -1,27 +1,18 @@
 ﻿@page
-@model Lab3.Pages.Collaboration.BudgetModel
+@using System.IO
+@model Lab3.Pages.Collaboration.FileHandlingModel
 @{
 }
 
 @{
-
-    string uploadsDir = Directory.GetCurrentDirectory();
-    uploadsDir += @"\wwwroot\BudgetFiles\";
+    string uploadsDir = Directory.GetCurrentDirectory(); 
+    uploadsDir += @"\wwwroot\fileupload\"; 
     DirectoryInfo uploadsFolder = new DirectoryInfo(uploadsDir);
     var fileListing = uploadsFolder.GetFiles();
 }
 
-<h1>Budgeting & Finance</h1>
-<br />
 <h3>File Upload</h3>
 <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
-    <input type="file" name="BudgetFiles" />
-    <input type="submit" value="Upload" />
-</form>
-<br />
-
-<h3>CSV Upload</h3>
-<form method="post" enctype="multipart/form-data" asp-page="FileUpload" asp-page-handler="fileUpload">
     <input type="file" name="fileupload" />
     <input type="submit" value="Upload" />
 </form>
@@ -42,22 +33,6 @@
     }
 </table>
 <br />
-
-<aside>
-    <h3>Chat</h3>
-    <div class="chat-messages">
-        <textarea class="chat-output" readonly>
-            @foreach (var message in Model.ChatMessages)
-            {
-                @($"{message.Username}: {message.Message} - {message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")}\n")
-            }
-        </textarea>
-    </div>
-    <form method="post">
-        <input type="text" asp-for="NewChatMessage" placeholder="Type Message Here..." />
-        <button type="submit" asp-page-handler="Chat">Send</button>
-    </form>
-</aside>
 
 <style>
     .chat-output {
