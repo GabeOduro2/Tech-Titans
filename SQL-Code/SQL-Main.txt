@@ -76,10 +76,3 @@ VALUES ('admin','Jane', 'Smith', 'jane.smith@example.com', 9876543210, '456 Elm 
 -- Insert into UserData table
 INSERT INTO UserData (Date, UserID) VALUES (GETDATE(), 1);
 INSERT INTO UserData (Date, UserID) VALUES (GETDATE(), 2);
-
--- Insert into KnowledgeItem table
-INSERT INTO KnowledgeItem (Title, Category, Information, UserID) 
-VALUES ('Best Practices for Improving County Government Administrative Efficiency', 'Administrative Review', 'Step 1: Assess your strengths and weaknesses', 1);
-
-INSERT INTO KnowledgeItem (Title, Category, Information, UserID) 
-VALUES ('Best Practices for Managing County Governmnet Personnel', 'Administrative Review', 'Identifying management practices for legal compliance and employee satisfaction', 2);
