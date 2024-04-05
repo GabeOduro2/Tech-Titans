@@ -7,14 +7,10 @@
 <form method="post">
     <h1>Create a New Resource</h1>
     <div>
-        <label asp-for="NewPlan.Name">Enter Documents's Title:</label>
+        <label asp-for="NewPlan.Name">Enter Resource Title:</label>
         <input asp-for="NewPlan.Name"/>
         <span asp-validation-for="NewPlan.Name" class="text-danger"></span>
     </div>
-    Select users to share resource with:
-    <select asp-for="SelectedUsers" asp-items="Model.Users" multiple class="form-select">
-        
-    </select>
     
-    <button type="submit" class="btn btn-primary" asp-page-handler="Save">Save Plan</button>
+    <button type="submit" class="btn btn-primary" asp-page-handler="Save">Save</button>
 </form>
