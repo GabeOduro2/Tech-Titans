@@ -1,0 +1,26 @@
+﻿@page
+@model Lab3.Pages.FinAnalysisModel
+
+<h2>Financial Analysis</h2>
+
+<form method="post">
+    <label for="tableSelect">Choose a table:</label>
+    <select id="tableSelect" name="SelectedTable" asp-items="@(new SelectList(Model.TableNames))">
+        <option value="">-- Select a Table --</option>
+    </select>
+    <input type="submit" value="Load Columns" />
+
+    @if (Model.ColumnNames.Any())
+    {
+        <div>
+            <h3>Select Columns from @Model.SelectedTable</h3>
+            @foreach (var column in Model.ColumnNames)
+            {
+                <input type="checkbox" name="SelectedColumns" value="@column" /> @column
+
+                <br />
+            }
+            <input type="submit" value="Submit Selection" />
+        </div>
+    }
+</form>

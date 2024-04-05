@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Lab3.Pages
+namespace Lab3.Pages.Collaboration
 {
     public class FileHandlingModel : PageModel
     {
@@ -23,19 +23,6 @@ namespace Lab3.Pages
                 return RedirectToPage();
             }
             return Page();
-        }
-
-        public IActionResult OnPostDelete(string fileName)
-        {
-            string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "fileupload");
-            string filePath = Path.Combine(uploadsDir, fileName);
-
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-
-            return RedirectToPage();
         }
     }
 }

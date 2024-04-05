@@ -20,6 +20,13 @@
 </form>
 <br />
 
+<h3>CSV Upload</h3>
+<form method="post" enctype="multipart/form-data" asp-page="FileUpload" asp-page-handler="fileUpload">
+    <input type="file" name="fileupload" />
+    <input type="submit" value="Upload" />
+</form>
+<br />
+
 <h3>File Repository</h3>
 <table>
     <tr>
