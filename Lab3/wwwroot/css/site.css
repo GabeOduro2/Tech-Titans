@@ -31,10 +31,26 @@ html {
 
 body {
     margin-bottom: 60px;
-    color: white;
-    background-color: #28336E;
+    color: black;
+    background-color: #ffffff;
 }
 
 td {
     color: white;
+}
+
+.custom-navbar-color {
+    background-color: #28336E; /* Replace #yourCustomColor with your desired color code */
+}
+
+.btn-primary {
+    background-color: #28336E;
+    border-color: #28336E; /* Optionally, change border color */
+}
+
+form {
+    background-color: #f2f2f2; /* Background color for the form */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
 }
