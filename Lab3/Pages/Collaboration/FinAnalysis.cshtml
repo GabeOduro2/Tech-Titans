@@ -1,5 +1,5 @@
 ﻿@page
-@model Lab3.Pages.FinAnalysisModel
+@model Lab3.Pages.Collaboration.FinAnalysisModel
 
 <h2>Financial Analysis</h2>
 
@@ -13,14 +13,22 @@
     @if (Model.ColumnNames.Any())
     {
         <div>
-            <h3>Select Columns from @Model.SelectedTable</h3>
+            <h3>Select Columns for Analysis (Select 2 columns for regression)</h3>
             @foreach (var column in Model.ColumnNames)
             {
                 <input type="checkbox" name="SelectedColumns" value="@column" /> @column
-
                 <br />
             }
             <input type="submit" value="Submit Selection" />
         </div>
     }
 </form>
+
+
+
+@if (Model.RegressionResult.Intercept != 0 || Model.RegressionResult.Slope != 0)
+{
+    <h3>Regression Analysis Result</h3>
+    <p>Intercept: @Model.RegressionResult.Intercept</p>
+    <p>Slope: @Model.RegressionResult.Slope</p>
+}
