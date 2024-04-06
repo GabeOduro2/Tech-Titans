@@ -87,33 +87,7 @@ namespace Lab3.Pages.DB
             }
         }
 
-        public static void InsertKnowledgeItem(KnowledgeItemModel k, string category)
-        {
-            String sqlQuery = "INSERT INTO KnowledgeItem (UserID, Title, Category, Information) VALUES (@UserID, @Title, @Category, @Information)";
 
-            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
-            {
-                using (SqlCommand cmd = new SqlCommand(sqlQuery, Lab3DBConnection))
-                {
-                    cmd.Parameters.AddWithValue("@UserID", k.UserID);
-                    cmd.Parameters.AddWithValue("@Title", k.Title);
-
-                    if (string.IsNullOrEmpty(category))
-                    {
-                        cmd.Parameters.AddWithValue("@Category", DBNull.Value);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@Category", category);
-                    }
-
-                    cmd.Parameters.AddWithValue("@Information", k.Information);
-
-                    Lab3DBConnection.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
         public static void InsertQueryCSV(string sqlQuery)
         {
             Console.WriteLine($"Generated SQL Query: {sqlQuery}");
@@ -200,68 +174,6 @@ namespace Lab3.Pages.DB
             SqlDataReader tempReader = cmdGetMessages.ExecuteReader();
 
             return tempReader;
-        }
-
-        public static void InsertNewCollabArea(CollabClass c)
-        {
-            string sqlQuery = "INSERT INTO Collaboration (Name, Chat) VALUES (@Name, @Chats)";
-
-            using (SqlConnection connection = new SqlConnection(Lab3DBConnString))
-            {
-                using (SqlCommand cmd = new SqlCommand(sqlQuery, connection))
-                {
-                    cmd.Parameters.AddWithValue("@Name", c.Name);
-                    cmd.Parameters.AddWithValue("@Chats", c.Chats);
-
-                    connection.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public static void InsertNewPlan(Plan p)
-        {
-            // Construct the SQL query to insert the plan's name and number of steps
-            string sqlQuery = "INSERT INTO [Plan] (Name, NumSteps) VALUES (@Name, @NumSteps); SELECT SCOPE_IDENTITY();";
-
-            // Create a new SqlCommand object and set its properties
-            using (SqlCommand cmd = new SqlCommand(sqlQuery, Lab3DBConnection))
-            {
-                cmd.Parameters.AddWithValue("@Name", p.Name);
-                cmd.Parameters.AddWithValue("@NumSteps", p.Steps.Count);
-
-                Lab3DBConnection.Open();
-
-                // Execute the SQL command to insert the plan and retrieve the generated PlanID
-                int planID = Convert.ToInt32(cmd.ExecuteScalar());
-
-                // Insert each step into the Step table
-                foreach (var step in p.Steps)
-                {
-                    InsertStep(planID, step); // Call the method to insert the step
-                }
-
-                Lab3DBConnection.Close();
-            }
-        }
-
-        private static void InsertStep(int planID, Step step)
-        {
-            // Construct the SQL query to insert a step into the Step table
-            string sqlQuery = "INSERT INTO Step (Name, Priority, Information, PlanID) VALUES (@Name, @Priority, @Information, @PlanID)";
-
-            // Create a new SqlCommand object and set its properties
-            using (SqlCommand cmd = new SqlCommand(sqlQuery, Lab3DBConnection))
-            {
-                // Add parameters to the SqlCommand object to prevent SQL injection and ensure data integrity
-                cmd.Parameters.AddWithValue("@Name", step.Name);
-                cmd.Parameters.AddWithValue("@Priority", step.Priority);
-                cmd.Parameters.AddWithValue("@Information", step.Information);
-                cmd.Parameters.AddWithValue("@PlanID", planID);
-
-                // Execute the SQL command
-                cmd.ExecuteNonQuery();
-            }
         }
 
         public static SqlDataReader SingleKnowledgeReader(int knowledgeID)

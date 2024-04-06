@@ -82,5 +82,18 @@ namespace Lab3.Pages.Collaboration
             return Page();
         }
 
+        public IActionResult OnPostDelete(string fileName)
+        {
+            string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "AdminReviewFiles");
+            string filePath = Path.Combine(uploadsDir, fileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            return RedirectToPage();
+        }
+
     }
 }
