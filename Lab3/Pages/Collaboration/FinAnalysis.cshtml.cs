@@ -16,11 +16,15 @@ namespace Lab3.Pages.Collaboration
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<FinAnalysisModel> _logger;
+        
+        private readonly IWebHostEnvironment _env;
 
-        public FinAnalysisModel(IConfiguration configuration, ILogger<FinAnalysisModel> logger)
+
+        public FinAnalysisModel(IConfiguration configuration, ILogger<FinAnalysisModel> logger, IWebHostEnvironment env)
         {
             _configuration = configuration;
             _logger = logger;
+            _env = env;
             TableNames = new List<string>();
             ColumnNames = new List<string>();
             ColumnFinancials = new Dictionary<string, FinancialData>();
@@ -66,21 +70,35 @@ namespace Lab3.Pages.Collaboration
 
             return Page();
         }
+        private List<string> GetBudgetFileNames()
+        {
+            var budgetFilesPath = Path.Combine(_env.WebRootPath, "BudgetFiles");
+            return Directory.GetFiles(budgetFilesPath).Select(Path.GetFileNameWithoutExtension).ToList();
+        }
 
         private async Task GetTableNamesAsync()
         {
+            var fileNames = GetBudgetFileNames();
             string connectionString = _configuration.GetConnectionString("Lab3ConnectionString");
+
             using (var connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
-                var query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
-                using (var command = new SqlCommand(query, connection))
+
+                foreach (var fileName in fileNames)
                 {
-                    using (var reader = await command.ExecuteReaderAsync())
+                    var query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = @TableName";
+
+                    using (var command = new SqlCommand(query, connection))
                     {
-                        while (await reader.ReadAsync())
+                        command.Parameters.AddWithValue("@TableName", fileName);
+
+                        using (var reader = await command.ExecuteReaderAsync())
                         {
-                            TableNames.Add(reader.GetString(0));
+                            if (await reader.ReadAsync())
+                            {
+                                TableNames.Add(reader.GetString(0));
+                            }
                         }
                     }
                 }
