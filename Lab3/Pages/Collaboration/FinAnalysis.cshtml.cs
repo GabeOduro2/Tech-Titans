@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using MathNet.Numerics.LinearRegression;
 using System.Globalization;
 using MathNet.Numerics;
+using Lab3.Pages.DataClasses;
+using System.Text.Json;
 
 namespace Lab3.Pages.Collaboration
 {
@@ -21,17 +23,20 @@ namespace Lab3.Pages.Collaboration
             _logger = logger;
             TableNames = new List<string>();
             ColumnNames = new List<string>();
+            ColumnFinancials = new Dictionary<string, FinancialData>();
         }
-
+        public decimal TotalRevenues { get; set; }
+        public decimal TotalExpenses { get; set; }
         public List<string> TableNames { get; set; }
         public List<string> ColumnNames { get; set; }
         public Dictionary<string, List<string>> ColumnData { get; set; }
         public (double Intercept, double Slope) RegressionResult { get; set; }
-
+        public Dictionary<string, FinancialData> ColumnFinancials { get; set; }
         [BindProperty]
         public string SelectedTable { get; set; }
         [BindProperty]
         public List<string> SelectedColumns { get; set; }
+        
 
         public async Task OnGetAsync()
         {
@@ -51,6 +56,12 @@ namespace Lab3.Pages.Collaboration
             {
                 await FetchColumnDataAsync();
                 PerformRegression();
+            }
+            if (SelectedColumns != null && SelectedColumns.Count > 0)
+            {
+                await FetchColumnDataAsync();
+                ProcessColumnDataForRevenueAndExpenses();
+                PrepareChartData();
             }
 
             return Page();
@@ -202,7 +213,59 @@ namespace Lab3.Pages.Collaboration
                 _logger.LogError(ex, "Error performing regression analysis");
             }
         }
+        private void ProcessColumnDataForRevenueAndExpenses()
+        {
+            ColumnFinancials = new Dictionary<string, FinancialData>();
 
+            foreach (var kvp in ColumnData)
+            {
+                var financialData = new FinancialData();
+
+                foreach (var value in kvp.Value)
+                {
+                    if (decimal.TryParse(value, out decimal number))
+                    {
+                        if (number > 0)
+                        {
+                            financialData.TotalRevenue += number;
+                        }
+                        else if (number < 0)
+                        {
+                            financialData.TotalExpense += number; // Adds the negative value
+                        }
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Failed to convert value to decimal: {Value}", value);
+                        // Handle or log the error as needed
+                    }
+                }
+
+                ColumnFinancials[kvp.Key] = financialData;
+            }
+        }
+        public string ChartLabelsJson { get; private set; }
+        public string RevenueDataJson { get; private set; }
+        public string ExpenseDataJson { get; private set; }
+
+        private void PrepareChartData()
+        {
+            var labels = new List<string>();
+            var revenues = new List<decimal>();
+            var expenses = new List<decimal>();
+
+            foreach (var entry in ColumnFinancials)
+            {
+                labels.Add(entry.Key);
+                revenues.Add(entry.Value.TotalRevenue);
+                expenses.Add(Math.Abs(entry.Value.TotalExpense)); // Convert to positive values for charting
+            }
+
+            ChartLabelsJson = JsonSerializer.Serialize(labels);
+            RevenueDataJson = JsonSerializer.Serialize(revenues);
+            ExpenseDataJson = JsonSerializer.Serialize(expenses);
+        }
+        
     }
 }
 

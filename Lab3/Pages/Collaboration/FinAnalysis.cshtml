@@ -32,3 +32,72 @@
     <p>Intercept: @Model.RegressionResult.Intercept</p>
     <p>Slope: @Model.RegressionResult.Slope</p>
 }
+
+@foreach (var columnFinance in Model.ColumnFinancials)
+{
+    <div>
+        <h3>@columnFinance.Key</h3>
+        <p>Total Revenues: @columnFinance.Value.TotalRevenue</p>
+        <p>Total Expenses: @columnFinance.Value.TotalExpense</p>
+    </div>
+}
+
+<style>
+    #downloadBtn {
+        display: none;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"> </script>
+<canvas id="myFinanceChart" width="400" height="400"></canvas>
+<button id="downloadBtn">Download Chart</button>
+
+<script type="text/javascript">
+    var ctx = document.getElementById('myFinanceChart').getContext('2d');
+    var labels = @Html.Raw(Model.ChartLabelsJson);
+    var revenueData = @Html.Raw(Model.RevenueDataJson);
+    var expenseData = @Html.Raw(Model.ExpenseDataJson);
+
+    var myChart = new Chart(ctx, {
+        type: 'bar', // You can change the chart type to 'line', 'pie', etc.
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Revenues',
+                data: expenseData,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }, {
+                label: 'Expenses',
+                data: revenueData,
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    // Show the download button after chart is rendered
+    document.getElementById('downloadBtn').style.display = 'block';
+</script>
+
+<script>
+    document.getElementById('downloadBtn').addEventListener('click', function () {
+        var canvas = document.getElementById('myFinanceChart');
+        var dataURL = canvas.toDataURL('image/png');
+        var link = document.createElement('a');
+        link.download = 'my-finance-chart.png';
+        link.href = dataURL;
+        link.click();
+    });
+</script>
