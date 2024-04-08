@@ -55,13 +55,13 @@ namespace Lab3.Pages
                 // Populates form with sample data
                 NewUser = new User
                 {
-                    Username = "sampleUsername",
-                    Password = "samplePassword",
-                    FirstName = "John",
-                    LastName = "Doe",
-                    Email = "john@example.com",
+                    Username = "cEsposito",
+                    Password = "Password12345",
+                    FirstName = "Carla",
+                    LastName = "Esposito",
+                    Email = "cEsposito@madisonco.com",
                     Phone = "1234567890",
-                    Address = "123 Sample St",
+                    Address = "123 Main St",
                     UserType = "Finance"
                 };
                 PopulateSelectedUserType();
