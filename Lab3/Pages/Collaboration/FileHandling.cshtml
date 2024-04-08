@@ -12,12 +12,17 @@
 }
 <h1>Public Files</h1>
 <br />
-<h3>File Upload</h3>
-<form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
-    <input type="file" name="fileupload" />
-    <input type="submit" value="Upload" />
-</form>
-<br />
+@{
+    if (HttpContext.Session.GetString("username") != null)
+    {
+        <h3>File Upload</h3>
+        <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+            <input type="file" name="fileupload" />
+            <input type="submit" value="Upload" />
+        </form>
+        <br />
+    }
+}
 
 <h3>File Repository</h3>
 <table>
@@ -34,7 +39,10 @@
             <td>
                 <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Are you sure you want to delete this file?');">
                     <input type="hidden" name="fileName" value="@file.Name" />
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    @if (HttpContext.Session.GetString("username") != null)
+                    {
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    }
                 </form>
             </td>
         </tr>
