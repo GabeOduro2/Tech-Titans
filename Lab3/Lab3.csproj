@@ -7,6 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\NewFolder1\**" />
+    <Compile Remove="wwwroot\NewFolder2\**" />
+    <Compile Remove="wwwroot\NewFolder3\**" />
+    <Compile Remove="wwwroot\NewFolder4\**" />
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove="wwwroot\NewFolder1\**" />
+    <Content Remove="wwwroot\NewFolder2\**" />
+    <Content Remove="wwwroot\NewFolder3\**" />
+    <Content Remove="wwwroot\NewFolder4\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder1\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder2\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder3\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder4\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove="wwwroot\NewFolder1\**" />
+    <None Remove="wwwroot\NewFolder2\**" />
+    <None Remove="wwwroot\NewFolder3\**" />
+    <None Remove="wwwroot\NewFolder4\**" />
+    <None Remove="wwwroot\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Pages\Collaboration\NewCollabArea.cshtml.cs" />
     <Compile Remove="Pages\Collaboration\ViewPlan.cshtml.cs" />
   </ItemGroup>
@@ -18,11 +41,17 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="31.0.2" />
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\fileupload\" />
+    <Folder Include="wwwroot\AdminReviewFiles\" />
+    <Folder Include="wwwroot\BudgetFiles\" />
+    <Folder Include="wwwroot\EcoDevFiles\" />
+    <Folder Include="wwwroot\CitizenFiles\" />
+    <Folder Include="wwwroot\PolicyFiles\" />
   </ItemGroup>
 
 </Project>

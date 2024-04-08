@@ -1,24 +1,32 @@
-using Lab3.Pages.DataClasses;
-using Lab3.Pages.DB;
+using System;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Lab3.Pages.DataClasses;
+using Lab3.Pages.DB;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data.SqlClient;
 
 namespace Lab3.Pages.Collaboration
 {
     public class EcoDevModel : PageModel
     {
         [BindProperty] public string? ErrorMessage { get; set; }
-        [BindProperty] public string NewChatMessage { get; set; }
+        [BindProperty] public string? NewChatMessage { get; set; }
         public List<Chat> ChatMessages { get; set; }
+
+        public EcoDevModel()
+        {
+            // Retrieve chat messages from the database
+            ChatMessages = DBClass.GetEcoDevChatMessages();
+            DBClass.Lab3DBConnection.Close();
+        }
+
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("username") != null)
             {
-                // Retrieve chat messages from the database
-                ChatMessages = DBClass.GetEcoDevChatMessages();
-
-                DBClass.Lab3DBConnection.Close();
-
                 return Page();
             }
             else
@@ -52,6 +60,36 @@ namespace Lab3.Pages.Collaboration
             }
 
             return Page();
+        }
+
+        public IActionResult OnPostUpload(IFormFile EcoDevfiles)
+        {
+            if (EcoDevfiles != null && EcoDevfiles.Length > 0)
+            {
+                string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "EcoDevFiles");
+                string filePath = Path.Combine(uploadsDir, EcoDevfiles.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    EcoDevfiles.CopyTo(fileStream);
+                }
+
+                return RedirectToPage();
+            }
+
+            return Page();
+        }
+
+        public IActionResult OnPostDelete(string fileName)
+        {
+            string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "EcoDevFiles");
+            string filePath = Path.Combine(uploadsDir, fileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            return RedirectToPage();
         }
     }
 }

@@ -3,56 +3,76 @@
 @{
 }
 
-@{
-    if (ViewData["LoginMessage"]!= null)
-    {
-        <p class="text-danger">@ViewData["LoginMessage"]</p>
-    }
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .transparent-box {
+            background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
 
-@{
-    if (HttpContext.Session.GetString("username") != null)
-    {
-        <p>@HttpContext.Session.GetString("username") logged in</p>
-        // Log out here
-        <form asp-page="DBLogin" asp-page-handler="LogoutHandler">
-        <input type="submit" class="btn btn-danger" value="Logout">
-        </form>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-4">
+                @if (ViewData["LoginMessage"] != null)
+                {
+                    <p class="text-danger">@ViewData["LoginMessage"]</p>
+                }
 
-    }
-    else if (HttpContext.Session.GetString("LoginError") != null)
-    {
-        <p class="text-danger">@HttpContext.Session.GetString("LoginError")</p>
+                @if (HttpContext.Session.GetString("username") != null)
+                {
+                    <p>@HttpContext.Session.GetString("username") logged in</p>
+                    <form asp-page="DBLogin" asp-page-handler="LogoutHandler">
+                        <input type="submit" class="btn btn-danger" value="Logout">
+                    </form>
+                }
+                else if (HttpContext.Session.GetString("LoginError") != null)
+                {
+                    <p class="text-danger">@HttpContext.Session.GetString("LoginError")</p>
+                    <form asp-page="DBLogin">
+                        <div class="transparent-box">
+                            <div class="mb-3">
+                                <label for="Username" class="form-label">Enter Username:</label>
+                                <input id="Username" asp-for="Username" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Password" class="form-label">Enter Password:</label>
+                                <input id="Password" asp-for="Password" class="form-control" type="password" />
+                            </div>
+                            <input type="submit" class="btn btn-primary" />
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <form asp-page="DBLogin">
+                        <div class="transparent-box">
+                            <div class="mb-3">
+                                <label for="Username" class="form-label">Enter Username:</label>
+                                <input id="Username" asp-for="Username" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Password" class="form-label">Enter Password:</label>
+                                <input id="Password" asp-for="Password" class="form-control" type="password" />
+                            </div>
+                            <input type="submit" class="btn btn-primary" />
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
 
-
-        // Let the user try login again.
-        <form asp-page="DBLogin">
-        <label>Enter Username:</label>
-        <input asp-for="Username" class="form-control" />
-        <br />
-        <label>Enter Password:</label>
-        <input asp-for="Password" class="form-control" type="password" />
-        <br />
-        <input type="submit" class="btn btn-primary" />
-        </form>
-        <br />
-
-    }
-    else
-    {
-        // First time loading the page
-
-        <form asp-page="DBLogin">
-            <label>Enter Username:</label>
-        <input asp-for="Username" class="form-control" />
-        <br />
-        <label>Enter Password:</label>
-        <input asp-for="Password" class="form-control" type="password" />
-        <br />
-        <input type="submit" class="btn btn-primary" />
-        </form>
-        <br />
-    }
-
-}
+    <!-- Include Bootstrap JavaScript (Optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 

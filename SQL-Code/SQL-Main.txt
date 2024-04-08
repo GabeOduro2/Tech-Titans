@@ -10,7 +10,7 @@ CREATE TABLE [User](
 	Email NVARCHAR(40),
 	Phone BIGINT,
 	Address NVARCHAR(100),
-	UserType NVARCHAR(25)
+	UserType NVARCHAR(50)
 );
 
 CREATE TABLE UserData(
@@ -27,30 +27,6 @@ CREATE TABLE KnowledgeItem(
 	Information NVARCHAR(300),
 	UserID int,
 	FOREIGN KEY (UserID) REFERENCES [User](UserID)
-);
-
-CREATE TABLE [Plan](
-	PlanID int IDENTITY(1,1) PRIMARY KEY,
-	Name NVARCHAR(150),
-	NumSteps int
-);
-
-CREATE TABLE Step(
-	StepID int IDENTITY(1,1) PRIMARY KEY,
-	Name NVARCHAR(50),
-	Priority int,
-	Information NVARCHAR(50),
-	PlanID int,
-	FOREIGN KEY (PlanID) REFERENCES [Plan](PlanID)
-);
-
-CREATE TABLE Collaboration(
-	CollabID int IDENTITY(1,1) PRIMARY KEY,
-	Name NVARCHAR(100),
-	Chat NVARCHAR(1000),
-	UserID int FOREIGN KEY REFERENCES [User](UserID),
-	KnowledgeID int	FOREIGN KEY REFERENCES KnowledgeItem(KnowledgeID),
-	PlanID int FOREIGN KEY REFERENCES [Plan](PlanID),
 );
 
 CREATE TABLE Chat (
@@ -100,31 +76,3 @@ VALUES ('admin','Jane', 'Smith', 'jane.smith@example.com', 9876543210, '456 Elm 
 -- Insert into UserData table
 INSERT INTO UserData (Date, UserID) VALUES (GETDATE(), 1);
 INSERT INTO UserData (Date, UserID) VALUES (GETDATE(), 2);
-
--- Insert into KnowledgeItem table
-INSERT INTO KnowledgeItem (Title, Category, Information, UserID) 
-VALUES ('Best Practices for Improving County Government Administrative Efficiency', 'Administrative Review', 'Step 1: Assess your strengths and weaknesses', 1);
-
-INSERT INTO KnowledgeItem (Title, Category, Information, UserID) 
-VALUES ('Best Practices for Managing County Governmnet Personnel', 'Administrative Review', 'Identifying management practices for legal compliance and employee satisfaction', 2);
-
--- Insert into [Plan] table
-INSERT INTO [Plan] (Name, NumSteps) 
-VALUES ('Citizen Engagement Plan', 5);
-
-INSERT INTO [Plan] (Name, NumSteps) 
-VALUES ('Economic Development Strategy for 2024', 10);
-
--- Insert into Step table
-INSERT INTO Step (Name, Priority, Information, PlanID) 
-VALUES ('Engage Citizens', 1, 'Initiate citizen engagement activities', 1);
-
-INSERT INTO Step (Name, Priority, Information, PlanID) 
-VALUES ('Economic Analysis', 1, 'Conduct an economic analysis for 2024', 2);
-
--- Insert into Collaboration table
-INSERT INTO Collaboration (Name, Chat, UserID, KnowledgeID, PlanID) 
-VALUES ('Spending levels and projections', '2024 Analysis:', 1, 1, 1);
-
-INSERT INTO Collaboration (Name, Chat, UserID, KnowledgeID, PlanID) 
-VALUES ('Tax base assessment and projected revenue', '2024 Analysis:', 2, 2, 2);

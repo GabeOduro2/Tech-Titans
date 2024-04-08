@@ -8,17 +8,20 @@ namespace Lab3.Pages.Collaboration
     public class CitizenCommModel : PageModel
     {
         [BindProperty] public string? ErrorMessage { get; set; }
-        [BindProperty] public string NewChatMessage { get; set; }
-        public List<Chat> ChatMessages { get; set; }
+        [BindProperty] public string? NewChatMessage { get; set; }
+        public List<Chat> ChatMessages { get; set; } 
+
+        public CitizenCommModel()
+        {
+            // Retrieve chat messages from the database
+            ChatMessages = DBClass.GetCitizenChatMessages();
+            DBClass.Lab3DBConnection.Close();
+        }
+
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("username") != null)
             {
-                // Retrieve chat messages from the database
-                ChatMessages = DBClass.GetCitizenChatMessages();
-
-                DBClass.Lab3DBConnection.Close();
-
                 return Page();
             }
             else
@@ -52,6 +55,36 @@ namespace Lab3.Pages.Collaboration
             }
 
             return Page();
+        }
+
+        public IActionResult OnPostUpload(IFormFile CitizenFiles)
+        {
+            if (CitizenFiles != null && CitizenFiles.Length > 0)
+            {
+                string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CitizenFiles");
+                string filePath = Path.Combine(uploadsDir, CitizenFiles.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    CitizenFiles.CopyTo(fileStream);
+                }
+
+                return RedirectToPage();
+            }
+
+            return Page();
+        }
+
+        public IActionResult OnPostDelete(string fileName)
+        {
+            string uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "CitizenFiles");
+            string filePath = Path.Combine(uploadsDir, fileName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            return RedirectToPage();
         }
     }
 }

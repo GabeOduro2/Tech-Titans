@@ -1,19 +1,20 @@
 ﻿@page
-@model Lab3.Pages.Collaboration.CitizenCommModel
+@model CreatePlanModel
 @{
+    ViewData["Title"] = "Create Resource";
 }
 
 @{
     string uploadsDir = Directory.GetCurrentDirectory();
-    uploadsDir += @"\wwwroot\CitizenFiles\";
+    uploadsDir += @"\wwwroot\ResourceFiles\";
     DirectoryInfo uploadsFolder = new DirectoryInfo(uploadsDir);
     var fileListing = uploadsFolder.GetFiles();
 }
-<h1>Citizen Communication</h1>
+<h1>Resources</h1>
 <br />
 <h3>File Upload</h3>
 <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
-    <input type="file" name="CitizenFiles" />
+    <input type="file" name="ResourceFiles" />
     <input type="submit" value="Upload" />
 </form>
 <br />
@@ -39,23 +40,6 @@
         </tr>
     }
 </table>
-<br />
-
-<aside>
-    <h3>Chat</h3>
-    <div class="chat-messages">
-        <textarea class="chat-output" readonly>
-            @foreach (var message in Model.ChatMessages)
-            {
-                @($"{message.Username}: {message.Message} - {message.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")}\n")
-            }
-        </textarea>
-    </div>
-    <form method="post">
-        <input type="text" asp-for="NewChatMessage" placeholder="Type Message Here..." />
-        <button type="submit" asp-page-handler="Chat">Send</button>
-    </form>
-</aside>
 
 <style>
     .chat-output {

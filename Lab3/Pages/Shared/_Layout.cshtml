@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http;
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,7 +16,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light bg-body card mb-lg-3 list-group-item-light">
+        <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light custom-navbar-color card mb-lg-3 list-group-item-light">
             <div class="container">
                 <a class="navbar-brand text-light" asp-area="" asp-page="/Index">Madison County</a>
                 <button class="navbar-toggler justify-content-md-around" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -30,35 +29,63 @@
                             if (Context.Session.GetString("username") != null)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Sign Up</a>
-                                </li>
-                                // <li class="nav-item">
-                                //     <a class="nav-link text-light" asp-area="" asp-page="/KnowledgeItemPages/SearchKnowledgeItem">Documents</a>
-                                // </li>
-                                // <li class="nav-item">
-                                //     <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CollaborateArea">Collaborate</a>
-                                // </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CreatePlan">Resources</a>
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/FileHandling">Files</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/FileHandling">Files</a>
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/Resources">Resources</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/Budget">Budget</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CitizenComm">Citizen Communication</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/EcoDev">Economic Development</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/PersonalPolicy">Personal Policy</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/AdminEffReview">Admin Efficiency Review</a>
-                                </li>
+                                var userType = Context.Session.GetString("userType");
+                                if (userType == "PR")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CitizenComm">Citizen Communication</a>
+                                    </li>
+                                }
+                                if (userType == "Finance")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/Budget">Budget</a>
+                                    </li>
+                                }
+                                if (userType == "Administrative Review")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/AdminEffReview">Admin Review</a>
+                                    </li>
+                                }
+                                if (userType == "Personal Policy and Administration")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/PersonalPolicy">Personal Policy</a>
+                                    </li>
+                                }
+                                if (userType == "Economic Development")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/EcoDev">Economic Development</a>
+                                    </li>
+                                }
+                                if (userType == "Admin")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/Budget">Budget</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/CitizenComm">Citizen Communication</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/EcoDev">Economic Development</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/PersonalPolicy">Personal Policy</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/Collaboration/AdminEffReview">Admin Review</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-page="/CreateUser">Sign Up</a>
+                                    </li>
+                                }
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-page="/SecureLoginLanding">@Context.Session.GetString("username")</a>
                                 </li>
@@ -81,7 +108,7 @@
             @RenderBody()
         </main>
     </div>
-    <footer class="border-top footer text-primary" >
+    <footer class="border-top footer custom-navbar-color text-light">
         <div class="container">
             &copy; 2024 - Madison County
         </div>
@@ -94,3 +121,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

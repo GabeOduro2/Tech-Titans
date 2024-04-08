@@ -5,73 +5,86 @@
 }
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col"></div>
+        <div class="col-md-4">
+            <img src="images/madisoncounty.png" alt="Image" class="img-fluid mb-4 d-block mx-auto">
         </div>
-        <div class="col">
-            <img src="images/madisoncounty.png" alt="Image" class="img-fluid mb-4">
-        </div>
-        <div class="col">
-        </div>
+        <div class="col"></div>
     </div>
 </div>
 
-<h1>Sign Up for New Account</h1>
-<form asp-page="CreateUser" method="post" class="needs-validation" novalidate>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label asp-for="NewUser.Username">Enter New Username:</label>
-            <input asp-for="NewUser.Username" class="form-control" />
-            <span asp-validation-for="NewUser.Username" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-6">
-            <label asp-for="NewUser.Password">Enter New Password:</label>
-            <input asp-for="NewUser.Password" class="form-control" />
-            <span asp-validation-for="NewUser.Password" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label asp-for="NewUser.FirstName">Enter New First Name:</label>
-            <input asp-for="NewUser.FirstName" class="form-control" />
-            <span asp-validation-for="NewUser.FirstName" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-6">
-            <label asp-for="NewUser.LastName">Enter New Last Name:</label>
-            <input asp-for="NewUser.LastName" class="form-control" />
-            <span asp-validation-for="NewUser.LastName" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label asp-for="NewUser.Email">Enter New Email Address:</label>
-            <input asp-for="NewUser.Email" class="form-control" />
-        </div>
-        <div class="form-group col-md-6">
-            <label asp-for="NewUser.Phone">Enter New Phone Number:</label>
-            <input asp-for="NewUser.Phone" class="form-control" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label asp-for="NewUser.Address">Enter New Address:</label>
-        <input asp-for="NewUser.Address" class="form-control" style="width: 650px;" />
-    </div>
-    <div class="form-group">
-        <label asp-for="NewUser.UserType">Enter New Type:</label>
-        <select asp-for="NewUser.UserType" asp-items="Model.SelectedUserType" class="form-control" style="width: 325px;">
-            <option value="">Select User Type</option>
-        </select>
-        <span asp-validation-for="NewUser.UserType" class="text-danger"></span>
-    </div>
+<h1 class="text-center">Sign Up for New Account</h1>
+<div class="transparent-box">
+    <form asp-page="CreateUser" method="post" class="needs-validation" novalidate>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="NewUser.Username" class="form-label">Enter Username:</label>
+                    <input asp-for="NewUser.Username" class="form-control" />
+                    <span asp-validation-for="NewUser.Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NewUser.Password" class="form-label">Enter Password:</label>
+                    <input asp-for="NewUser.Password" class="form-control" />
+                    <span asp-validation-for="NewUser.Password" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label asp-for="NewUser.FirstName" class="form-label">Enter First Name:</label>
+                        <input asp-for="NewUser.FirstName" class="form-control" />
+                        <span asp-validation-for="NewUser.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col">
+                        <label asp-for="NewUser.LastName" class="form-label">Enter Last Name:</label>
+                        <input asp-for="NewUser.LastName" class="form-control" />
+                        <span asp-validation-for="NewUser.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NewUser.Email" class="form-label">Enter Email Address:</label>
+                    <input asp-for="NewUser.Email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="NewUser.Phone" class="form-label">Enter Phone Number:</label>
+                    <input asp-for="NewUser.Phone" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="NewUser.Address" class="form-label">Enter Address:</label>
+                    <input asp-for="NewUser.Address" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="NewUser.UserType" class="form-label">Enter User Type:</label>
+                    <select asp-for="NewUser.UserType" asp-items="Model.SelectedUserType" class="form-control">
+                        <option value="">Select User Type</option>
+                    </select>
+                    <span asp-validation-for="NewUser.UserType" class="text-danger"></span>
+                </div>
 
-    @{
-        if (Model.CreateMessage != null)
-        {
-            <p> @Model.CreateMessage</p>
-        }
+                @{
+                    if (Model.CreateMessage != null)
+                    {
+                        <p> @Model.CreateMessage</p>
+                    }
+                }
+                <div class="form-group text-center">
+                    <input type="submit" value="Sign Up ->" class="btn btn-primary" />
+                    <button class="btn-outline-secondary" asp-page-handler="PopulateHandler" formnovalidate>Populate</button>
+                    <button class="btn btn-outline-secondary" asp-page-handler="Clear">Clear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@* Add CSS for transparent-box *@
+
+<style>
+    .transparent-box {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
     }
-    <div class="form-group">
-        <input type="submit" value="Sign Up ->" class="btn btn-primary" />
-        <button class="btn-outline-secondary" asp-page-handler="PopulateHandler" formnovalidate>Populate</button>
-        <button class="btn btn-outline-secondary" asp-page-handler="Clear">Clear</button>
-    </div>
-</form>
+
+        .transparent-box form {
+            margin-bottom: 0; /* Remove default margin */
+        }
+</style>
